@@ -24,39 +24,38 @@ export default function Home() {
 
 function HeroSection() {
   return (
-    <section className="h-screen flex flex-col relative overflow-hidden px-4 py-4">
-      {/* Big Title */}
-      <div className="w-full relative z-10 mt-16 md:mt-0">
-        <h1 className="text-[13vw] leading-[0.8] font-bold tracking-tighter uppercase text-center md:text-left mix-blend-difference text-white">
+    <section className="min-h-screen flex flex-col justify-between pt-24 pb-24 px-4 relative overflow-hidden">
+      {/* Big Title - Positioned absolutely or just large at top */}
+      <div className="w-full flex justify-center md:justify-start relative z-10">
+        <h1 className="text-[12vw] md:text-[10vw] leading-[0.8] font-bold tracking-tighter uppercase text-center md:text-left mix-blend-difference">
           HackFirst
         </h1>
       </div>
 
-      {/* Glitch Video Area - Centered */}
-      <div className="absolute inset-0 flex items-center justify-center z-0 pointer-events-none">
-        <div className="relative w-[60vw] md:w-[30vw] aspect-[3/4] overflow-hidden">
+      {/* Glitch Video Area */}
+      <div className="flex-grow flex items-center justify-center my-8 md:my-0 relative">
+        <div className="relative w-full max-w-md aspect-[4/5] md:aspect-square overflow-hidden grayscale contrast-125 brightness-90">
            <video 
             src={tornadoVideo} 
             autoPlay
             loop
             muted
             playsInline
-            className="w-full h-full object-cover grayscale contrast-[1.2] brightness-75 scale-110"
+            className="w-full h-full object-cover mix-blend-screen opacity-90"
           />
-          {/* Glitch Overlays */}
-          <div className="absolute inset-0 bg-black/20 mix-blend-multiply"></div>
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMSIvPgo8L3N2Zz4=')] opacity-30"></div>
+          {/* Scanline overlay */}
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPC9zdmc+')] opacity-20 pointer-events-none"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent opacity-0 animate-scan pointer-events-none"></div>
         </div>
       </div>
 
       {/* Bottom Text */}
-      <div className="mt-auto mb-16 relative z-10 text-white mix-blend-difference">
-        <h3 className="text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] mb-4 text-white/80">
+      <div className="space-y-4 relative z-10">
+        <h3 className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
           Cyberattack Simulations
         </h3>
-        <h2 className="text-2xl md:text-4xl lg:text-5xl font-sans font-normal leading-[1.1] text-balance max-w-3xl tracking-tight">
-          Most advanced cyberattack simulations: <br className="hidden md:block" />
-          HackFirst™
+        <h2 className="text-3xl md:text-5xl font-sans font-normal leading-tight text-balance max-w-2xl tracking-tight">
+          Most advanced cyberattack simulations: HackFirst™
         </h2>
       </div>
     </section>
