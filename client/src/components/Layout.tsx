@@ -57,15 +57,15 @@ export function Layout({ children }: LayoutProps) {
   }, [scrollYProgress]);
 
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans selection:bg-purple-500 selection:text-white">
+    <div className="min-h-screen bg-background text-foreground font-sans selection:bg-white selection:text-black">
       {/* Header */}
       <header 
         className={cn(
           "fixed top-0 left-0 right-0 z-50 flex items-start justify-between px-6 py-6 transition-all duration-500 ease-in-out",
-          isScrolled ? "bg-black/80 backdrop-blur-md" : "bg-transparent"
+          isScrolled ? "bg-black/80 backdrop-blur-md" : "bg-transparent mix-blend-difference"
         )}
       >
-        <div className="text-xl font-bold tracking-tighter font-sans text-white mix-blend-difference">
+        <div className="text-xl font-bold tracking-tighter font-sans text-white">
           dhuruv.dev
         </div>
         
@@ -75,7 +75,7 @@ export function Layout({ children }: LayoutProps) {
             <a 
               key={link.name}
               href={link.href}
-              className="text-xs md:text-sm font-mono uppercase tracking-widest text-white/90 hover:text-purple-400 transition-colors"
+              className="text-xs md:text-sm font-mono uppercase tracking-widest text-white/80 hover:text-white transition-colors"
             >
               {link.name}
             </a>
@@ -135,8 +135,8 @@ function Footer({ progressPercent, scaleX }: { progressPercent: number, scaleX: 
           <ul className="space-y-4">
             {['FACEBOOK', 'LINKEDIN', 'X'].map((social) => (
               <li key={social} className="flex items-center gap-3 group cursor-pointer">
-                <span className="w-1.5 h-1.5 bg-white transition-colors group-hover:bg-purple-500"></span>
-                <span className="text-sm font-mono tracking-wider group-hover:text-purple-400 transition-colors">{social}</span>
+                <span className="w-1.5 h-1.5 bg-white transition-colors group-hover:bg-white"></span>
+                <span className="text-sm font-mono tracking-wider group-hover:text-white transition-colors">{social}</span>
               </li>
             ))}
           </ul>
@@ -150,8 +150,8 @@ function Footer({ progressPercent, scaleX }: { progressPercent: number, scaleX: 
           <ul className="space-y-4">
             {['HOME', 'SERVICES', 'ABOUT', 'CONTACT'].map((item) => (
               <li key={item} className="flex items-center gap-3 group cursor-pointer">
-                <span className="w-1.5 h-1.5 bg-white transition-colors group-hover:bg-purple-500"></span>
-                <span className="text-sm font-mono tracking-wider group-hover:text-purple-400 transition-colors">{item}</span>
+                <span className="w-1.5 h-1.5 bg-white transition-colors group-hover:bg-white"></span>
+                <span className="text-sm font-mono tracking-wider group-hover:text-white transition-colors">{item}</span>
               </li>
             ))}
           </ul>

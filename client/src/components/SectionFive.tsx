@@ -72,13 +72,13 @@ export function SectionFive() {
           ref={labelRef}
           className="text-xs md:text-sm font-mono uppercase tracking-[0.2em] text-gray-400 mb-6"
         >
-          Add Section
+          Exploration
         </p>
         <h2 
           ref={headingRef}
           className="text-4xl md:text-6xl lg:text-7xl font-sans font-medium leading-tight tracking-tight max-w-5xl mx-auto text-balance"
         >
-          Section Number 05
+          Exploring the "Hello World"
         </h2>
       </div>
     </section>

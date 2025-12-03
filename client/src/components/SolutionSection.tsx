@@ -72,13 +72,13 @@ export function SolutionSection() {
           ref={labelRef}
           className="text-xs md:text-sm font-mono uppercase tracking-[0.2em] text-gray-400 mb-6"
         >
-          The Solution
+          Development
         </p>
         <h2 
           ref={headingRef}
           className="text-4xl md:text-6xl lg:text-7xl font-sans font-medium leading-tight tracking-tight max-w-5xl mx-auto text-balance"
         >
-          Security audits give you peace of mind
+          Python & JavaScript: Building the future
         </h2>
       </div>
     </section>

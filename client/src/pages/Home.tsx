@@ -4,6 +4,8 @@ import { SolutionSection } from "@/components/SolutionSection";
 import { NewSection } from "@/components/NewSection";
 import { SectionFive } from "@/components/SectionFive";
 import { motion, useScroll, useTransform } from "framer-motion";
+import tornadoVideo from "@assets/tornado-home_1764776962349.mp4";
+import glitchImage from "@assets/generated_images/dark_abstract_digital_glitch_art_for_cyber_security_website.png";
 
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -16,7 +18,7 @@ export default function Home() {
     <Layout>
       <div ref={containerRef} className="relative bg-black">
         <HeroSection />
-        <SkillsSection />
+        <IntroductionSection />
         <SolutionSection />
         <NewSection />
         <SectionFive />
@@ -27,62 +29,45 @@ export default function Home() {
 
 function HeroSection() {
   return (
-    <section className="min-h-screen flex flex-col justify-center px-6 relative overflow-hidden bg-gradient-to-b from-purple-900/20 to-black pt-32">
-      
-      {/* Text Content */}
-      <div className="relative z-20 max-w-5xl mx-auto w-full text-center md:text-left">
-        <motion.p 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-xl md:text-2xl font-light text-purple-200/80 mb-4"
-        >
-          Hello! I'm
-        </motion.p>
-        <motion.h1 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-[12vw] leading-[0.8] font-bold tracking-tighter text-white mb-6 mix-blend-difference"
-        >
+    <section className="min-h-screen flex flex-col justify-between pt-24 pb-24 px-4 relative overflow-hidden">
+      {/* Big Title */}
+      <div className="w-full flex justify-center md:justify-start relative z-10">
+        <h1 className="text-[12vw] md:text-[10vw] leading-[0.8] font-bold tracking-tighter uppercase text-center md:text-left mix-blend-difference text-white">
           DHURUV
-        </motion.h1>
-        <motion.h2 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-4xl md:text-6xl font-bold tracking-tighter text-white/50"
-        >
-          STUDENT & DEV
-        </motion.h2>
-        
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.6 }}
-          className="mt-12 max-w-2xl"
-        >
-           <p className="text-lg md:text-xl text-white/60 font-light leading-relaxed">
-             A 17-year-old creative exploring the digital frontier. <br/>
-             Cybersecurity enthusiast, Python & JS developer, and Game Designer.
-           </p>
-        </motion.div>
+        </h1>
       </div>
 
-      {/* Bottom Role Text */}
-      <div className="absolute bottom-12 left-0 right-0 text-center z-20 px-6">
-        <p className="text-xs font-mono uppercase tracking-[0.2em] text-purple-300/70 mb-2">
-          A Creative
-        </p>
-        <h3 className="text-2xl md:text-4xl font-bold text-white tracking-tight">
-          DESIGNER <span className="text-purple-500">DEVELOPER</span>
+      {/* Glitch Video Area - Restored Tornado */}
+      <div className="flex-grow flex items-center justify-center my-8 md:my-0 relative">
+        <div className="relative w-full max-w-md aspect-[4/5] md:aspect-square overflow-hidden grayscale contrast-125 brightness-90">
+           <video 
+            src={tornadoVideo} 
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover mix-blend-screen opacity-90"
+          />
+          {/* Scanline overlay */}
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPC9zdmc+')] opacity-20 pointer-events-none"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent opacity-0 animate-scan pointer-events-none"></div>
+        </div>
+      </div>
+
+      {/* Bottom Text */}
+      <div className="space-y-4 relative z-10">
+        <h3 className="text-xs font-mono uppercase tracking-widest text-muted-foreground">
+          Portfolio
         </h3>
+        <h2 className="text-3xl md:text-5xl font-sans font-normal leading-tight text-balance max-w-2xl tracking-tight text-white">
+          17 Year Old Student & Developer: Cybersecurity, Python, JS
+        </h2>
       </div>
     </section>
   );
 }
 
-function SkillsSection() {
+function IntroductionSection() {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -90,43 +75,36 @@ function SkillsSection() {
   });
   
   const opacity1 = useTransform(scrollYProgress, [0, 0.3], [0.2, 1]);
+  const opacity2 = useTransform(scrollYProgress, [0.2, 0.5], [0.2, 1]);
 
   return (
-    <section ref={ref} className="min-h-screen py-24 px-6 bg-black text-white flex flex-col justify-center border-t border-white/5">
-      <div className="max-w-4xl mx-auto w-full space-y-16">
+    <section ref={ref} className="min-h-screen py-24 px-4 bg-black text-white flex flex-col justify-center">
+      <div className="max-w-4xl mx-auto w-full space-y-24">
         
         {/* Header */}
-        <div className="space-y-4">
-          <h3 className="text-xs font-mono uppercase tracking-widest text-purple-500 mb-8">
-            Introduction
+        <div className="space-y-2">
+          <h3 className="text-xs font-mono uppercase tracking-widest text-muted-foreground mb-8">
+            Skills
           </h3>
           
-          <div className="text-2xl md:text-4xl lg:text-5xl font-light leading-tight tracking-tight space-y-6">
+          <div className="text-3xl md:text-5xl lg:text-6xl font-medium leading-tight tracking-tight space-y-2">
              <motion.p style={{ opacity: opacity1 }} className="text-white">
-               I'm a <span className="text-purple-400 font-normal">17-year-old</span> student in Class 12th, passionate about breaking things to make them secure.
+               Cybersecurity is about more than just defense.
              </motion.p>
-             <p className="text-white/60 text-xl md:text-3xl">
-               Exploring the "Hello World" of Cybersecurity, Python, JavaScript, and Game Design.
-             </p>
+             <motion.p style={{ opacity: opacity2 }} className="text-white/40 transition-colors duration-500 hover:text-white/90">
+               It's about understanding systems, finding vulnerabilities, and securing the digital world.
+             </motion.p>
           </div>
         </div>
 
-        {/* Skills Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-12">
-          <div className="space-y-4">
-            <h4 className="text-sm font-mono uppercase tracking-widest text-white/40">Core Skills</h4>
-            <ul className="space-y-2 text-lg">
-              <li className="border-b border-white/10 py-2">Cybersecurity</li>
-              <li className="border-b border-white/10 py-2">Python & JavaScript</li>
-              <li className="border-b border-white/10 py-2">Game Development</li>
-            </ul>
-          </div>
-          <div className="space-y-4">
-             <h4 className="text-sm font-mono uppercase tracking-widest text-white/40">Interests</h4>
-             <p className="text-white/70 leading-relaxed">
-               I love diving into code, experimenting with game mechanics, and learning how systems work from the inside out. Always ready for a good vibe and a new challenge.
-             </p>
-          </div>
+        {/* Secondary Text */}
+        <div className="max-w-2xl ml-auto text-lg md:text-xl text-muted-foreground font-light leading-relaxed">
+          <p>
+            I specialize in identifying vulnerabilities and strengthening systems against real-world threats. My focus includes{" "}
+            <span className="text-white border-b border-white/30 hover:border-white transition-colors cursor-default">network security</span>,{" "}
+            <span className="text-white border-b border-white/30 hover:border-white transition-colors cursor-default">ethical hacking</span>, and{" "}
+            <span className="text-white border-b border-white/30 hover:border-white transition-colors cursor-default">system hardening</span>.
+          </p>
         </div>
 
       </div>
