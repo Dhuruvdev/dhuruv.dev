@@ -59,6 +59,7 @@ export function NewSection() {
           loop
           muted
           playsInline
+          preload="auto"
           className="w-full h-full object-cover"
         />
         {/* Red tint overlay to match style */}

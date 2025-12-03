@@ -17,11 +17,17 @@ export default function Home() {
   return (
     <Layout>
       <div ref={containerRef} className="relative bg-black">
-        <HeroSection />
-        <IntroductionSection />
-        <SolutionSection />
-        <NewSection />
-        <SectionFive />
+        <div id="home">
+          <HeroSection />
+        </div>
+        <div id="about">
+          <IntroductionSection />
+        </div>
+        <div id="work">
+          <SolutionSection />
+          <NewSection />
+          <SectionFive />
+        </div>
       </div>
     </Layout>
   );
@@ -46,6 +52,7 @@ function HeroSection() {
             loop
             muted
             playsInline
+            preload="auto"
             className="w-full h-full object-cover mix-blend-screen opacity-90"
           />
           {/* Scanline overlay */}

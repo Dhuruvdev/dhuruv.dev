@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { motion, useScroll, useSpring, useMotionValueEvent } from "framer-motion";
 import Lenis from "lenis";
 import { cn } from "@/lib/utils";
-import { Link } from "wouter";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -15,6 +14,8 @@ const NAV_LINKS = [
 ];
 
 export function Layout({ children }: LayoutProps) {
+  const lenisRef = useRef<Lenis | null>(null);
+
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
@@ -22,7 +23,10 @@ export function Layout({ children }: LayoutProps) {
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: true,
+      touchMultiplier: 2,
     });
+
+    lenisRef.current = lenis;
 
     function raf(time: number) {
       lenis.raf(time);
@@ -35,6 +39,19 @@ export function Layout({ children }: LayoutProps) {
       lenis.destroy();
     };
   }, []);
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    const targetId = href.replace("#", "");
+    const elem = document.getElementById(targetId);
+    if (elem && lenisRef.current) {
+      lenisRef.current.scrollTo(elem, {
+        offset: 0,
+        duration: 1.5,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      });
+    }
+  };
 
   const { scrollYProgress, scrollY } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -62,20 +79,23 @@ export function Layout({ children }: LayoutProps) {
       <header 
         className={cn(
           "fixed top-0 left-0 right-0 z-50 flex items-start justify-between px-6 py-6 transition-all duration-500 ease-in-out",
-          isScrolled ? "bg-black/80 backdrop-blur-md" : "bg-transparent mix-blend-difference"
+          // Transparent overlay that doesn't overlap visually with a solid block, but adds readability when scrolled if needed.
+          // User requested "transparent not overlapping", so we keep it transparent but maybe add a very subtle gradient or just rely on text shadow/mix-blend
+          isScrolled ? "bg-black/0 backdrop-blur-none" : "bg-transparent"
         )}
       >
-        <div className="text-xl font-bold tracking-tighter font-sans text-white">
+        <div className="text-xl font-bold tracking-tighter font-sans text-white mix-blend-difference pointer-events-auto cursor-pointer" onClick={() => lenisRef.current?.scrollTo(0)}>
           dhuruv.dev
         </div>
         
-        {/* Nav Links - Top Right, Stacked on Mobile/Tablet to match screenshot, or list */}
-        <nav className="flex flex-col items-end gap-2 text-right">
+        {/* Nav Links */}
+        <nav className="flex flex-col items-end gap-2 text-right pointer-events-auto">
           {NAV_LINKS.map((link) => (
             <a 
               key={link.name}
               href={link.href}
-              className="text-xs md:text-sm font-mono uppercase tracking-widest text-white/80 hover:text-white transition-colors"
+              onClick={(e) => handleNavClick(e, link.href)}
+              className="text-xs md:text-sm font-mono uppercase tracking-widest text-white/80 hover:text-white transition-colors mix-blend-difference cursor-pointer"
             >
               {link.name}
             </a>
@@ -89,14 +109,14 @@ export function Layout({ children }: LayoutProps) {
       </main>
 
       {/* Footer */}
-      <Footer progressPercent={progressPercent} scaleX={scaleX} />
+      <Footer progressPercent={progressPercent} scaleX={scaleX} handleNavClick={handleNavClick} />
     </div>
   );
 }
 
-function Footer({ progressPercent, scaleX }: { progressPercent: number, scaleX: any }) {
+function Footer({ progressPercent, scaleX, handleNavClick }: { progressPercent: number, scaleX: any, handleNavClick: any }) {
   return (
-    <footer className="relative bg-black text-white pt-20 pb-4 px-6 overflow-hidden border-t border-white/10">
+    <footer id="contact" className="relative bg-black text-white pt-20 pb-4 px-6 overflow-hidden border-t border-white/10">
       {/* Top Small Text */}
       <div className="w-full text-center mb-16">
          <p className="text-[10px] md:text-xs font-mono uppercase tracking-widest text-white/50">
@@ -148,10 +168,21 @@ function Footer({ progressPercent, scaleX }: { progressPercent: number, scaleX: 
             NAVIGATION
           </h3>
           <ul className="space-y-4">
-            {['HOME', 'SERVICES', 'ABOUT', 'CONTACT'].map((item) => (
-              <li key={item} className="flex items-center gap-3 group cursor-pointer">
+            {[
+              { name: 'HOME', href: '#home' },
+              { name: 'WORK', href: '#work' },
+              { name: 'ABOUT', href: '#about' },
+              { name: 'CONTACT', href: '#contact' }
+            ].map((item) => (
+              <li key={item.name} className="flex items-center gap-3 group cursor-pointer">
                 <span className="w-1.5 h-1.5 bg-white transition-colors group-hover:bg-white"></span>
-                <span className="text-sm font-mono tracking-wider group-hover:text-white transition-colors">{item}</span>
+                <a 
+                  href={item.href}
+                  onClick={(e) => handleNavClick(e, item.href)}
+                  className="text-sm font-mono tracking-wider group-hover:text-white transition-colors"
+                >
+                  {item.name}
+                </a>
               </li>
             ))}
           </ul>
