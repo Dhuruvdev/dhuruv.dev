@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import { Layout } from "@/components/Layout";
+import { SolutionSection } from "@/components/SolutionSection";
 import { motion, useScroll, useTransform } from "framer-motion";
 import tornadoVideo from "@assets/tornado-home_1764776962349.mp4";
 
@@ -15,6 +16,7 @@ export default function Home() {
       <div ref={containerRef} className="relative">
         <HeroSection />
         <IntroductionSection />
+        <SolutionSection />
         {/* Spacer for scrolling feel */}
         <div className="h-[50vh] bg-black" /> 
       </div>
