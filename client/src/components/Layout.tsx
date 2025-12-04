@@ -205,7 +205,7 @@ function Footer({ progressPercent, scaleX, handleNavClick }: { progressPercent: 
         </div>
         
         <div className="text-[10px] font-mono uppercase tracking-widest text-white/30">
-          DESIGN BY .CASSARI
+          DESIGN BY DHURUV
         </div>
       </div>
     </footer>
