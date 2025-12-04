@@ -35,7 +35,7 @@ export default function Home() {
 
 function HeroSection() {
   return (
-    <section className="min-h-screen flex flex-col justify-between pt-24 pb-24 px-4 relative overflow-hidden">
+    <section className="min-h-screen flex flex-col justify-between pt-24 pb-24 px-0 md:px-4 relative overflow-hidden">
        {/* Full Screen Video Background */}
        <div className="absolute inset-0 w-full h-full z-0">
            <video 
@@ -53,18 +53,18 @@ function HeroSection() {
         </div>
 
       {/* Big Title */}
-      <div className="w-full flex justify-center md:justify-start relative z-10">
-        <h1 className="text-[12vw] md:text-[10vw] leading-[0.8] font-bold tracking-tighter uppercase text-center md:text-left mix-blend-difference text-white">
+      <div className="w-full flex justify-start relative z-10 pl-2 md:pl-0">
+        <h1 className="text-[18vw] md:text-[12vw] leading-[0.85] font-black tracking-[-0.04em] uppercase text-left mix-blend-difference text-white">
           DHURUV
         </h1>
       </div>
 
       {/* Bottom Text */}
-      <div className="space-y-4 relative z-10">
-        <h3 className="text-xs font-mono uppercase tracking-widest text-white/70">
+      <div className="space-y-4 relative z-10 px-4 md:px-0">
+        <h3 className="text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] text-white/60">
           Portfolio
         </h3>
-        <h2 className="text-3xl md:text-5xl font-sans font-normal leading-tight text-balance max-w-2xl tracking-tight text-white">
+        <h2 className="text-2xl md:text-4xl lg:text-5xl font-light leading-[1.15] max-w-2xl tracking-tight text-white">
           17 Year Old Student & Developer: Cybersecurity, Python, JS
         </h2>
       </div>

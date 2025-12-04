@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { SkipForward } from 'lucide-react';
 import loaderGif from '@assets/From_KlickPin_CF_Quadri_Moderni_Dipinti_e_Maschere_Eleganti____1764843579231.gif';
 
 interface VideoLoaderProps {
@@ -37,18 +35,14 @@ function IntroNavbar() {
 export function VideoLoader({ children }: VideoLoaderProps) {
   const [introEnded, setIntroEnded] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [showSkipButton, setShowSkipButton] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
 
   useEffect(() => {
-    const skipTimer = setTimeout(() => setShowSkipButton(true), 1500);
-    
     const endTimer = setTimeout(() => {
       handleIntroEnd();
     }, 6000);
 
     return () => {
-      clearTimeout(skipTimer);
       clearTimeout(endTimer);
     };
   }, []);
@@ -86,20 +80,6 @@ export function VideoLoader({ children }: VideoLoaderProps) {
         data-testid="gif-loader"
       />
 
-      {showSkipButton && !isTransitioning && (
-        <div className="absolute bottom-8 right-8 z-[60]">
-          <Button
-            onClick={handleSkip}
-            variant="outline"
-            size="lg"
-            className="bg-white/10 backdrop-blur-sm border-white/20 text-white"
-            data-testid="button-skip-intro"
-          >
-            <SkipForward className="w-4 h-4 mr-2" />
-            Skip Intro
-          </Button>
-        </div>
-      )}
 
       {!imageLoaded && (
         <div className="absolute inset-0 flex items-center justify-center z-[55] bg-black">
