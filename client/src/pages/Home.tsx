@@ -62,7 +62,7 @@ function HeroSection() {
   }, []);
 
   return (
-    <section className="min-h-screen flex flex-col justify-between pt-24 pb-24 px-0 md:px-4 relative overflow-hidden">
+    <section className="min-h-screen flex flex-col justify-between pt-20 pb-12 md:pt-24 md:pb-16 relative overflow-hidden">
        {/* Full Screen Video Background */}
        <div className="absolute inset-0 w-full h-full z-0">
            <video 
@@ -78,23 +78,23 @@ function HeroSection() {
           </video>
           {/* Scanline overlay */}
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPC9zdmc+')] opacity-20 pointer-events-none"></div>
-          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/80 pointer-events-none"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/90 pointer-events-none"></div>
         </div>
 
       {/* Big Title */}
-      <div className="w-full flex justify-start relative z-10 pl-2 md:pl-0">
-        <h1 className="text-[18vw] md:text-[12vw] leading-[0.85] font-black tracking-[-0.04em] uppercase text-left mix-blend-difference text-white">
+      <div className="w-full flex justify-start relative z-10 px-3 md:px-6">
+        <h1 className="text-[22vw] md:text-[14vw] leading-[0.82] font-black tracking-[-0.03em] uppercase text-left mix-blend-difference text-white">
           DHURUV
         </h1>
       </div>
 
       {/* Bottom Text */}
-      <div className="space-y-4 relative z-10 px-4 md:px-0">
-        <h3 className="text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] text-white/60">
-          Portfolio
-        </h3>
-        <h2 className="text-2xl md:text-4xl lg:text-5xl font-light leading-[1.15] max-w-2xl tracking-tight text-white">
-          17 Year Old Student & Developer: Cybersecurity, Python, JS
+      <div className="space-y-3 relative z-10 px-3 md:px-6">
+        <span className="inline-block text-[9px] md:text-[11px] font-mono uppercase tracking-[0.25em] text-white/50 border border-white/20 px-3 py-1">
+          Portfolio 2024
+        </span>
+        <h2 className="text-xl md:text-3xl lg:text-4xl font-normal leading-[1.2] max-w-lg tracking-tight text-white/90">
+          Student & Developer specializing in Cybersecurity, Python & JavaScript
         </h2>
       </div>
     </section>
@@ -112,32 +112,32 @@ function IntroductionSection() {
   const opacity2 = useTransform(scrollYProgress, [0.2, 0.5], [0.2, 1]);
 
   return (
-    <section ref={ref} className="min-h-screen py-24 px-4 bg-black text-white flex flex-col justify-center">
-      <div className="max-w-4xl mx-auto w-full space-y-24">
+    <section ref={ref} className="min-h-screen py-16 md:py-20 px-3 md:px-6 bg-black text-white flex flex-col justify-center">
+      <div className="max-w-4xl mx-auto w-full space-y-16 md:space-y-20">
         
         {/* Header */}
-        <div className="space-y-2">
-          <h3 className="text-xs font-mono uppercase tracking-widest text-muted-foreground mb-8">
-            Skills
-          </h3>
+        <div className="space-y-4">
+          <span className="inline-block text-[9px] md:text-[11px] font-mono uppercase tracking-[0.25em] text-white/50 border border-white/20 px-3 py-1">
+            About Me
+          </span>
           
-          <div className="text-3xl md:text-5xl lg:text-6xl font-medium leading-tight tracking-tight space-y-2">
+          <div className="text-2xl md:text-4xl lg:text-5xl font-normal leading-[1.25] tracking-tight space-y-1">
              <motion.p style={{ opacity: opacity1 }} className="text-white">
-               Cybersecurity is about more than just defense.
+               Cybersecurity is more than defense.
              </motion.p>
-             <motion.p style={{ opacity: opacity2 }} className="text-white/40 transition-colors duration-500 hover:text-white/90">
-               It's about understanding systems, finding vulnerabilities, and securing the digital world.
+             <motion.p style={{ opacity: opacity2 }} className="text-white/40 transition-colors duration-500 hover:text-white/80">
+               It's about understanding systems and securing the digital world.
              </motion.p>
           </div>
         </div>
 
         {/* Secondary Text */}
-        <div className="max-w-2xl ml-auto text-lg md:text-xl text-muted-foreground font-light leading-relaxed">
+        <div className="max-w-xl ml-auto text-base md:text-lg text-white/60 font-light leading-relaxed">
           <p>
             I specialize in identifying vulnerabilities and strengthening systems against real-world threats. My focus includes{" "}
-            <span className="text-white border-b border-white/30 hover:border-white transition-colors cursor-default">network security</span>,{" "}
-            <span className="text-white border-b border-white/30 hover:border-white transition-colors cursor-default">ethical hacking</span>, and{" "}
-            <span className="text-white border-b border-white/30 hover:border-white transition-colors cursor-default">system hardening</span>.
+            <span className="text-white/90 border-b border-white/30 hover:border-white/60 transition-colors cursor-default">network security</span>,{" "}
+            <span className="text-white/90 border-b border-white/30 hover:border-white/60 transition-colors cursor-default">ethical hacking</span>, and{" "}
+            <span className="text-white/90 border-b border-white/30 hover:border-white/60 transition-colors cursor-default">system hardening</span>.
           </p>
         </div>
 
