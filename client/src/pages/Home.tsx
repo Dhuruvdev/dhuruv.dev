@@ -4,7 +4,6 @@ import { SolutionSection } from "@/components/SolutionSection";
 import { NewSection } from "@/components/NewSection";
 import { SectionFive } from "@/components/SectionFive";
 import { motion, useScroll, useTransform } from "framer-motion";
-import tornadoVideo from "@assets/tornado-home_1764776962349.mp4";
 import glitchImage from "@assets/generated_images/dark_abstract_digital_glitch_art_for_cyber_security_website.png";
 
 export default function Home() {
@@ -75,7 +74,7 @@ function HeroSection() {
             preload="auto"
             className="w-full h-full object-cover grayscale contrast-125 brightness-90 opacity-60"
           >
-            <source src={tornadoVideo} type="video/mp4" />
+            <source src="/tornado.mp4" type="video/mp4" />
           </video>
           {/* Scanline overlay */}
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPC9zdmc+')] opacity-20 pointer-events-none"></div>
