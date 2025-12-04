@@ -3,6 +3,7 @@ import { Layout } from "@/components/Layout";
 import { SolutionSection } from "@/components/SolutionSection";
 import { NewSection } from "@/components/NewSection";
 import { SectionFive } from "@/components/SectionFive";
+import { ProjectShowcase } from "@/components/ProjectShowcase";
 import { motion, useScroll, useTransform } from "framer-motion";
 import glitchImage from "@assets/generated_images/dark_abstract_digital_glitch_art_for_cyber_security_website.png";
 
@@ -23,6 +24,7 @@ export default function Home() {
           <IntroductionSection />
         </div>
         <div id="work">
+          <ProjectShowcase />
           <SolutionSection />
           <NewSection />
           <SectionFive />
@@ -62,7 +64,7 @@ function HeroSection() {
   }, []);
 
   return (
-    <section className="min-h-screen flex flex-col justify-between pt-20 pb-12 md:pt-24 md:pb-16 relative overflow-hidden">
+    <section className="min-h-screen flex flex-col justify-between pt-20 pb-8 md:pt-24 md:pb-12 relative overflow-hidden">
        {/* Full Screen Video Background */}
        <div className="absolute inset-0 w-full h-full z-0">
            <video 
@@ -88,12 +90,43 @@ function HeroSection() {
         </h1>
       </div>
 
+      {/* Credentials Strip - fills the gap */}
+      <div className="relative z-10 px-3 md:px-6 flex-1 flex items-center">
+        <div className="w-full flex flex-col md:flex-row md:items-center md:justify-between gap-4 md:gap-8 py-4 border-t border-b border-white/10">
+          {/* Stats Row */}
+          <div className="flex flex-wrap items-center gap-4 md:gap-8">
+            <div className="flex flex-col">
+              <span className="text-2xl md:text-3xl font-bold text-white" data-testid="stat-years">3+</span>
+              <span className="text-[10px] md:text-xs text-white/50 uppercase tracking-wider">Years Coding</span>
+            </div>
+            <div className="w-px h-8 bg-white/20 hidden md:block"></div>
+            <div className="flex flex-col">
+              <span className="text-2xl md:text-3xl font-bold text-white" data-testid="stat-projects">10+</span>
+              <span className="text-[10px] md:text-xs text-white/50 uppercase tracking-wider">Projects</span>
+            </div>
+            <div className="w-px h-8 bg-white/20 hidden md:block"></div>
+            <div className="flex flex-col">
+              <span className="text-2xl md:text-3xl font-bold text-white" data-testid="stat-focus">100%</span>
+              <span className="text-[10px] md:text-xs text-white/50 uppercase tracking-wider">Passion</span>
+            </div>
+          </div>
+          {/* Availability */}
+          <div className="flex items-center gap-3">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+            </span>
+            <span className="text-xs md:text-sm text-white/70">Available for Projects</span>
+          </div>
+        </div>
+      </div>
+
       {/* Bottom Text */}
-      <div className="space-y-3 relative z-10 px-3 md:px-6">
+      <div className="space-y-2 relative z-10 px-3 md:px-6">
         <span className="inline-block text-[9px] md:text-[11px] font-mono uppercase tracking-[0.25em] text-white/50 border border-white/20 px-3 py-1">
           Portfolio 2024
         </span>
-        <h2 className="text-xl md:text-3xl lg:text-4xl font-normal leading-[1.2] max-w-lg tracking-tight text-white/90">
+        <h2 className="text-lg md:text-2xl lg:text-3xl font-normal leading-[1.2] max-w-lg tracking-tight text-white/90">
           Student & Developer specializing in Cybersecurity, Python & JavaScript
         </h2>
       </div>
