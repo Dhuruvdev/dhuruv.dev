@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { SkipForward } from 'lucide-react';
-import videoSource from '@assets/0ee901572ebe4fd3a9f47974987ea76e_1764842795749.mp4';
+import loaderGif from '@assets/From_KlickPin_CF_Quadri_Moderni_Dipinti_e_Maschere_Eleganti____1764843579231.gif';
 
 interface VideoLoaderProps {
   children: React.ReactNode;
@@ -35,71 +35,36 @@ function IntroNavbar() {
 }
 
 export function VideoLoader({ children }: VideoLoaderProps) {
-  const [videoEnded, setVideoEnded] = useState(false);
+  const [introEnded, setIntroEnded] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [showSkipButton, setShowSkipButton] = useState(false);
-  const [videoError, setVideoError] = useState(false);
-  const [videoLoaded, setVideoLoaded] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    const handleCanPlay = () => {
-      setVideoLoaded(true);
-    };
-
-    const handleLoadedData = () => {
-      setVideoLoaded(true);
-    };
-
-    video.addEventListener('canplay', handleCanPlay);
-    video.addEventListener('loadeddata', handleLoadedData);
-
-    const playVideo = async () => {
-      try {
-        await video.play();
-        setTimeout(() => setShowSkipButton(true), 2000);
-      } catch (error) {
-        console.error('Video autoplay failed:', error);
-        setVideoError(true);
-        setTimeout(handleVideoEnd, 1500);
-      }
-    };
-
-    if (video.readyState >= 3) {
-      setVideoLoaded(true);
-      playVideo();
-    } else {
-      video.addEventListener('canplay', () => playVideo(), { once: true });
-    }
+    const skipTimer = setTimeout(() => setShowSkipButton(true), 1500);
+    
+    const endTimer = setTimeout(() => {
+      handleIntroEnd();
+    }, 6000);
 
     return () => {
-      video.removeEventListener('canplay', handleCanPlay);
-      video.removeEventListener('loadeddata', handleLoadedData);
-      if (video) {
-        video.pause();
-      }
+      clearTimeout(skipTimer);
+      clearTimeout(endTimer);
     };
   }, []);
 
-  const handleVideoEnd = () => {
+  const handleIntroEnd = () => {
     setIsTransitioning(true);
     setTimeout(() => {
-      setVideoEnded(true);
+      setIntroEnded(true);
     }, 500);
   };
 
   const handleSkip = () => {
-    const video = videoRef.current;
-    if (video) {
-      video.pause();
-    }
-    handleVideoEnd();
+    handleIntroEnd();
   };
 
-  if (videoEnded) {
+  if (introEnded) {
     return <>{children}</>;
   }
 
@@ -113,22 +78,13 @@ export function VideoLoader({ children }: VideoLoaderProps) {
     >
       <IntroNavbar />
 
-      <video
-        ref={videoRef}
+      <img
+        src={loaderGif}
+        alt="Loading"
         className="w-full h-full object-cover"
-        playsInline
-        muted
-        preload="auto"
-        onEnded={handleVideoEnd}
-        onError={() => {
-          console.error('Video loading error');
-          setVideoError(true);
-          setTimeout(handleVideoEnd, 1500);
-        }}
-        data-testid="video-loader"
-      >
-        <source src={videoSource} type="video/mp4" />
-      </video>
+        onLoad={() => setImageLoaded(true)}
+        data-testid="gif-loader"
+      />
 
       {showSkipButton && !isTransitioning && (
         <div className="absolute bottom-8 right-8 z-[60]">
@@ -137,7 +93,7 @@ export function VideoLoader({ children }: VideoLoaderProps) {
             variant="outline"
             size="lg"
             className="bg-white/10 backdrop-blur-sm border-white/20 text-white"
-            data-testid="button-skip-video"
+            data-testid="button-skip-intro"
           >
             <SkipForward className="w-4 h-4 mr-2" />
             Skip Intro
@@ -145,8 +101,8 @@ export function VideoLoader({ children }: VideoLoaderProps) {
         </div>
       )}
 
-      {videoError && !videoLoaded && (
-        <div className="absolute inset-0 flex items-center justify-center z-[55]">
+      {!imageLoaded && (
+        <div className="absolute inset-0 flex items-center justify-center z-[55] bg-black">
           <div className="flex flex-col items-center gap-4">
             <div className="w-8 h-8 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
             <p className="text-white/70 text-sm font-mono uppercase tracking-widest">Loading...</p>
