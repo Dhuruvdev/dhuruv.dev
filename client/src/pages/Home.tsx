@@ -34,11 +34,40 @@ export default function Home() {
 }
 
 function HeroSection() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  React.useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const playVideo = async () => {
+      try {
+        video.muted = true;
+        await video.play();
+      } catch (error) {
+        console.log('Video autoplay failed, retrying...', error);
+        video.muted = true;
+        video.play().catch(() => {});
+      }
+    };
+
+    if (video.readyState >= 3) {
+      playVideo();
+    } else {
+      video.addEventListener('canplay', playVideo, { once: true });
+    }
+
+    return () => {
+      video.removeEventListener('canplay', playVideo);
+    };
+  }, []);
+
   return (
     <section className="min-h-screen flex flex-col justify-between pt-24 pb-24 px-0 md:px-4 relative overflow-hidden">
        {/* Full Screen Video Background */}
        <div className="absolute inset-0 w-full h-full z-0">
            <video 
+            ref={videoRef}
             autoPlay
             loop
             muted
