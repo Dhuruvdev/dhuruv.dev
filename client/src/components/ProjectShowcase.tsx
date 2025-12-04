@@ -48,10 +48,10 @@ export function ProjectShowcase() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <section className="py-16 md:py-24 px-3 md:px-6 bg-black" id="projects">
+    <section className="py-8 md:py-12 px-3 md:px-6 bg-black" id="projects">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
-        <div className="mb-12 md:mb-16">
+        <div className="mb-8 md:mb-12">
           <span className="inline-block text-[9px] md:text-[11px] font-mono uppercase tracking-[0.25em] text-white/50 border border-white/20 px-3 py-1 mb-4">
             Selected Work
           </span>

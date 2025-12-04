@@ -145,8 +145,8 @@ function IntroductionSection() {
   const opacity2 = useTransform(scrollYProgress, [0.2, 0.5], [0.2, 1]);
 
   return (
-    <section ref={ref} className="min-h-screen pt-[10px] pb-16 md:pb-20 px-3 md:px-6 bg-black text-white flex flex-col justify-center">
-      <div className="max-w-4xl mx-auto w-full space-y-16 md:space-y-20">
+    <section ref={ref} className="min-h-screen pt-[10px] pb-8 md:pb-12 px-3 md:px-6 bg-black text-white flex flex-col justify-center">
+      <div className="max-w-4xl mx-auto w-full space-y-12 md:space-y-16">
         
         {/* Header */}
         <div className="space-y-4">
