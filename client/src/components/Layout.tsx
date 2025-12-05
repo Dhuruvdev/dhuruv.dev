@@ -74,9 +74,9 @@ export function Layout({ children }: LayoutProps) {
   }, [scrollYProgress]);
 
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans selection:bg-white selection:text-black">
+    <div className="relative min-h-screen bg-background text-foreground font-sans selection:bg-white selection:text-black">
       {/* Header */}
-      <header 
+      <header
         className={cn(
           "fixed top-0 left-0 right-0 z-50 flex items-start justify-between px-6 py-6 transition-all duration-500 ease-in-out",
           // Transparent overlay that doesn't overlap visually with a solid block, but adds readability when scrolled if needed.
@@ -87,11 +87,11 @@ export function Layout({ children }: LayoutProps) {
         <div className="text-xl font-bold tracking-tighter font-sans text-white mix-blend-difference pointer-events-auto cursor-pointer" onClick={() => lenisRef.current?.scrollTo(0)}>
           dhuruv.dev
         </div>
-        
+
         {/* Nav Links */}
         <nav className="flex flex-col items-end gap-2 text-right pointer-events-auto">
           {NAV_LINKS.map((link) => (
-            <a 
+            <a
               key={link.name}
               href={link.href}
               onClick={(e) => handleNavClick(e, link.href)}
@@ -133,7 +133,7 @@ function Footer({ progressPercent, scaleX, handleNavClick }: { progressPercent: 
 
       {/* Grid Content */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 max-w-7xl mx-auto mb-24">
-        
+
         {/* About Column */}
         <div className="md:col-span-6 space-y-6">
           <h3 className="text-xs font-mono uppercase tracking-widest text-white/50">
@@ -176,7 +176,7 @@ function Footer({ progressPercent, scaleX, handleNavClick }: { progressPercent: 
             ].map((item) => (
               <li key={item.name} className="flex items-center gap-3 group cursor-pointer">
                 <span className="w-1.5 h-1.5 bg-white transition-colors group-hover:bg-white"></span>
-                <a 
+                <a
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.href)}
                   className="text-sm font-mono tracking-wider group-hover:text-white transition-colors"
@@ -197,13 +197,13 @@ function Footer({ progressPercent, scaleX, handleNavClick }: { progressPercent: 
           </div>
            {/* Progress Bar Visual */}
            <div className="w-20 h-[2px] bg-white/10 relative overflow-hidden">
-            <motion.div 
+            <motion.div
               className="absolute top-0 left-0 bottom-0 bg-white"
-              style={{ scaleX, transformOrigin: "0%" }} 
+              style={{ scaleX, transformOrigin: "0%" }}
             />
           </div>
         </div>
-        
+
         <div className="text-[10px] font-mono uppercase tracking-widest text-white/30">
           DESIGN BY DHURUV
         </div>
