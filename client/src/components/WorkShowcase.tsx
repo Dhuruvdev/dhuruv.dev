@@ -300,7 +300,7 @@ export function WorkShowcase() {
       {isNavigating && (
         <div className="fixed inset-0 z-50 pointer-events-none">
           <motion.div
-            className="absolute inset-0 overflow-hidden"
+            className="absolute inset-0 overflow-hidden bg-black"
             initial={{ 
               clipPath: `circle(0% at ${clickPosition.x}px ${clickPosition.y}px)`,
             }}
@@ -312,10 +312,13 @@ export function WorkShowcase() {
               ease: [0.16, 1, 0.3, 1]
             }}
           >
-            <img
-              src={currentProject.image}
-              alt={currentProject.title}
-              className="w-full h-full object-cover"
+            <video
+              src="/work-loader.mp4"
+              autoPlay
+              muted
+              playsInline
+              className="w-full h-full object-cover grayscale"
+              data-testid="video-work-loader"
             />
             
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/30" />
