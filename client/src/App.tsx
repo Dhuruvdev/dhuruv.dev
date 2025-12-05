@@ -7,7 +7,6 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
 import ProjectDetail from "@/pages/ProjectDetail";
 import { VideoLoader } from "@/components/VideoLoader";
-import { BrowserRouter } from "react-router-dom";
 
 function Router() {
   return (
@@ -23,14 +22,12 @@ function App() {
   return (
     <div className="relative">
       <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-          <TooltipProvider>
-            <VideoLoader>
-              <Toaster />
-              <Router />
-            </VideoLoader>
-          </TooltipProvider>
-        </BrowserRouter>
+        <TooltipProvider>
+          <VideoLoader>
+            <Toaster />
+            <Router />
+          </VideoLoader>
+        </TooltipProvider>
       </QueryClientProvider>
     </div>
   );
