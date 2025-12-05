@@ -1,14 +1,8 @@
-import { useState, useEffect, createContext, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import loaderGif from '@assets/From_KlickPin_CF_Quadri_Moderni_Dipinti_e_Maschere_Eleganti____1764843579231.gif';
 
 interface VideoLoaderProps {
   children: React.ReactNode;
-}
-
-const LoaderContext = createContext<{ introEnded: boolean }>({ introEnded: false });
-
-export function useLoaderContext() {
-  return useContext(LoaderContext);
 }
 
 const NAV_LINKS = [
@@ -38,64 +32,63 @@ function IntroNavbar() {
   );
 }
 
-export function VideoLoader({ children }: VideoLoaderProps) {
-  const [introEnded, setIntroEnded] = useState(false);
+function LoaderOverlay({ onComplete }: { onComplete: () => void }) {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
-  const [showLoader, setShowLoader] = useState(true);
 
   useEffect(() => {
     const endTimer = setTimeout(() => {
-      handleIntroEnd();
+      setIsTransitioning(true);
+      setTimeout(() => {
+        onComplete();
+      }, 500);
     }, 6000);
 
     return () => {
       clearTimeout(endTimer);
     };
-  }, []);
-
-  const handleIntroEnd = () => {
-    setIsTransitioning(true);
-    setTimeout(() => {
-      setIntroEnded(true);
-      setTimeout(() => {
-        setShowLoader(false);
-      }, 100);
-    }, 500);
-  };
+  }, [onComplete]);
 
   return (
-    <LoaderContext.Provider value={{ introEnded }}>
-      {showLoader && (
-        <div
-          className="fixed inset-0 z-50 bg-black"
-          style={{
-            opacity: isTransitioning ? 0 : 1,
-            transition: 'opacity 500ms ease-out',
-            pointerEvents: introEnded ? 'none' : 'auto',
-          }}
-        >
-          <IntroNavbar />
+    <div
+      className="fixed inset-0 z-50 bg-black"
+      style={{
+        opacity: isTransitioning ? 0 : 1,
+        transition: 'opacity 500ms ease-out',
+      }}
+    >
+      <IntroNavbar />
 
-          <img
-            src={loaderGif}
-            alt="Loading"
-            className="w-full h-full object-cover"
-            onLoad={() => setImageLoaded(true)}
-            data-testid="gif-loader"
-          />
+      <img
+        src={loaderGif}
+        alt="Loading"
+        className="w-full h-full object-cover"
+        onLoad={() => setImageLoaded(true)}
+        data-testid="gif-loader"
+      />
 
-          {!imageLoaded && (
-            <div className="absolute inset-0 flex items-center justify-center z-[55] bg-black">
-              <div className="flex flex-col items-center gap-4">
-                <div className="w-8 h-8 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                <p className="text-white/70 text-sm font-mono uppercase tracking-widest">Loading...</p>
-              </div>
-            </div>
-          )}
+      {!imageLoaded && (
+        <div className="absolute inset-0 flex items-center justify-center z-[55] bg-black">
+          <div className="flex flex-col items-center gap-4">
+            <div className="w-8 h-8 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+            <p className="text-white/70 text-sm font-mono uppercase tracking-widest">Loading...</p>
+          </div>
         </div>
       )}
-      {introEnded && children}
-    </LoaderContext.Provider>
+    </div>
   );
+}
+
+export function VideoLoader({ children }: VideoLoaderProps) {
+  const [showLoader, setShowLoader] = useState(true);
+
+  const handleComplete = () => {
+    setShowLoader(false);
+  };
+
+  if (showLoader) {
+    return <LoaderOverlay onComplete={handleComplete} />;
+  }
+
+  return <>{children}</>;
 }
