@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, useCallback } from "react";
 import { motion, useScroll, useSpring, useMotionValueEvent } from "framer-motion";
 import Lenis from "lenis";
 import { cn } from "@/lib/utils";
-import backgroundMusic from "@assets/The_Weeknd_-_Popular_(mp3.pm)_1768138981947.mp3";
+import backgroundMusic from "@assets/whisper_ambient.mp3";
 import { Volume2, VolumeX } from "lucide-react";
 
 interface LayoutProps {
@@ -10,8 +10,7 @@ interface LayoutProps {
 }
 
 const NAV_LINKS = [
-  { name: "ABOUT", href: "#about" },
-  { name: "WORK", href: "#work" },
+  { name: "DESIGN", href: "#design" },
   { name: "CONTACT", href: "#contact" },
 ];
 
@@ -36,14 +35,17 @@ export function Layout({ children }: LayoutProps) {
 
         const source = ctx.createMediaElementSource(audio);
         
-        // Bass boost filter - making it more subtle
-        const bassFilter = ctx.createBiquadFilter();
-        bassFilter.type = "lowshelf";
-        bassFilter.frequency.value = 150;
-        bassFilter.gain.value = 6; // Reduced from 15 for a less "vibing" sound
+        // Make it sounds like a whisper - high pass and low volume
+        const highPass = ctx.createBiquadFilter();
+        highPass.type = "highpass";
+        highPass.frequency.value = 1000;
 
-        source.connect(bassFilter);
-        bassFilter.connect(ctx.destination);
+        const gainNode = ctx.createGain();
+        gainNode.gain.value = 0.15; // Very low volume
+
+        source.connect(highPass);
+        highPass.connect(gainNode);
+        gainNode.connect(ctx.destination);
       }
     };
 
