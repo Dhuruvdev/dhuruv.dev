@@ -1,19 +1,14 @@
 import React, { useRef } from "react";
 import { Layout } from "@/components/Layout";
+import { ProjectShowcase } from "@/components/ProjectShowcase";
 import { SolutionSection } from "@/components/SolutionSection";
 import { NewSection } from "@/components/NewSection";
 import { SectionFive } from "@/components/SectionFive";
-import { WorkShowcase } from "@/components/WorkShowcase";
 import { motion, useScroll, useTransform } from "framer-motion";
-import glitchImage from "@assets/generated_images/dark_abstract_digital_glitch_art_for_cyber_security_website.png";
 import tornadoVideo from "@assets/ff910602e43e722ff30b731491bbbdf0_t4_1768137492567.mp4";
 
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
-  });
 
   return (
     <Layout>
@@ -21,11 +16,8 @@ export default function Home() {
         <div id="home">
           <HeroSection />
         </div>
-        <div id="about">
-          <IntroductionSection />
-        </div>
-        <div id="work">
-          <WorkShowcase />
+        <div id="design">
+          <ProjectShowcase />
           <SolutionSection />
           <NewSection />
           <SectionFive />

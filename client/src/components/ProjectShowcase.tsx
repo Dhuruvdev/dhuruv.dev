@@ -48,23 +48,49 @@ export function ProjectShowcase() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <section className="py-8 md:py-12 px-3 md:px-6 bg-black" id="projects">
-      <div className="max-w-6xl mx-auto">
-        {/* Section Header */}
-        <div className="mb-8 md:mb-12">
-          <span className="inline-block text-[9px] md:text-[11px] font-mono uppercase tracking-[0.25em] text-white/50 border border-white/20 px-3 py-1 mb-4">
-            Selected Work
-          </span>
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight">
-            <span className="text-white">My </span>
-            <span className="text-cyan-400">Work</span>
-          </h2>
+    <section className="py-24 px-6 bg-black" id="projects">
+      <div className="max-w-7xl mx-auto">
+        {/* Header from Screenshot */}
+        <div className="flex flex-col md:flex-row justify-between items-start mb-20 gap-8">
+          <div className="space-y-2">
+            <h2 className="text-6xl md:text-8xl font-black italic tracking-tighter leading-none text-white uppercase">
+              I BUILT IT<br />
+              <span className="text-pink-300">NO CAP</span>
+            </h2>
+          </div>
+          
+          <div className="flex flex-col items-end">
+            <div className="w-32 h-32 md:w-40 md:h-40 rounded-xl overflow-hidden border-2 border-white/20 hover-elevate group">
+               <img 
+                 src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=80&w=400" 
+                 alt="Profile" 
+                 className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+               />
+            </div>
+            <span className="mt-2 text-[10px] font-mono tracking-widest text-white/50 uppercase">MY-LIVE-CAM</span>
+          </div>
         </div>
 
-        {/* Projects Grid */}
-        <div ref={containerRef} className="space-y-6 md:space-y-8">
+        {/* Projects Grid with Large Cards like the Screenshot */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
           {projects.map((project, index) => (
-            <ProjectCard key={project.id} project={project} index={index} />
+            <div key={project.id} className="relative aspect-[3/4] group overflow-hidden rounded-2xl hover-elevate">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10" />
+              <img 
+                src={`https://images.unsplash.com/photo-${1550745165 + index}-9bc122957c3e?auto=format&fit=crop&q=80&w=800`}
+                alt={project.title}
+                className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+              />
+              <div className="absolute inset-0 flex flex-col justify-end p-8 z-20">
+                <span className="text-xs font-mono tracking-widest text-white/60 mb-2 uppercase">{project.category}</span>
+                <h3 className="text-4xl md:text-5xl font-black italic text-white uppercase tracking-tighter group-hover:text-pink-300 transition-colors">
+                  {project.title}
+                </h3>
+                <div className="flex gap-4 mt-6 opacity-0 group-hover:opacity-100 transition-opacity">
+                   <div className="px-4 py-2 border border-white/20 rounded-full text-[10px] font-mono tracking-widest text-white uppercase">VIEW PROJECT</div>
+                </div>
+              </div>
+            </div>
           ))}
         </div>
       </div>
