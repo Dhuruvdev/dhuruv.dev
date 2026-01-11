@@ -16,6 +16,7 @@ const projects: Project[] = [
     category: "Cybersecurity Tool",
     description: "Advanced network vulnerability scanner built with Python.",
     tools: ["Python", "Scapy", "Nmap"],
+    image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 2,
@@ -23,6 +24,7 @@ const projects: Project[] = [
     category: "Web Application",
     description: "End-to-end encrypted messaging platform.",
     tools: ["JavaScript", "Node.js", "Socket.io"],
+    image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 3,
@@ -30,6 +32,7 @@ const projects: Project[] = [
     category: "Monitoring Dashboard",
     description: "Real-time security monitoring dashboard.",
     tools: ["React", "Python", "FastAPI"],
+    image: "https://images.unsplash.com/photo-1551288049-bbbda5366991?auto=format&fit=crop&q=80&w=800"
   },
 ];
 
@@ -77,7 +80,7 @@ export function ProjectShowcase() {
           >
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent z-10" />
             <img 
-              src={`https://images.unsplash.com/photo-${1550745165 + index}-9bc122957c3e?auto=format&fit=crop&q=80&w=800`}
+              src={project.image || `https://images.unsplash.com/photo-${1550745165 + index}-9bc122957c3e?auto=format&fit=crop&q=80&w=800`}
               alt={project.title}
               className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
             />
