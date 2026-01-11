@@ -75,24 +75,12 @@ function HeroSection() {
             muted
             playsInline
             preload="auto"
-            className="w-full h-full object-cover grayscale contrast-125 brightness-90 opacity-60"
+            className="w-full h-full object-cover"
           >
             <source src={tornadoVideo} type="video/mp4" />
           </video>
-          {/* Scanline overlay */}
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPC9zdmc+')] opacity-20 pointer-events-none"></div>
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/90 pointer-events-none"></div>
         </div>
-
-      {/* Bottom Text */}
-      <div className="space-y-2 relative z-10 px-3 md:px-6">
-        <span className="inline-block text-[9px] md:text-[11px] font-mono uppercase tracking-[0.25em] text-white/50 border border-white/20 px-3 py-1">
-          Portfolio 2024
-        </span>
-        <h2 className="text-lg md:text-2xl lg:text-3xl font-normal leading-[1.2] max-w-lg tracking-tight text-white/90">
-          Student & Developer specializing in Cybersecurity, Python & JavaScript
-        </h2>
-      </div>
     </section>
   );
 }
