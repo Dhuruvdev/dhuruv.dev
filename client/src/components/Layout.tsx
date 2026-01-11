@@ -36,11 +36,11 @@ export function Layout({ children }: LayoutProps) {
 
         const source = ctx.createMediaElementSource(audio);
         
-        // Bass boost filter
+        // Bass boost filter - making it more subtle
         const bassFilter = ctx.createBiquadFilter();
         bassFilter.type = "lowshelf";
-        bassFilter.frequency.value = 200;
-        bassFilter.gain.value = 15; // High bass boost
+        bassFilter.frequency.value = 150;
+        bassFilter.gain.value = 6; // Reduced from 15 for a less "vibing" sound
 
         source.connect(bassFilter);
         bassFilter.connect(ctx.destination);
@@ -77,8 +77,8 @@ export function Layout({ children }: LayoutProps) {
       const source = ctx.createMediaElementSource(audio);
       const bassFilter = ctx.createBiquadFilter();
       bassFilter.type = "lowshelf";
-      bassFilter.frequency.value = 200;
-      bassFilter.gain.value = 15;
+      bassFilter.frequency.value = 150;
+      bassFilter.gain.value = 6;
       source.connect(bassFilter);
       bassFilter.connect(ctx.destination);
     }
