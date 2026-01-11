@@ -65,7 +65,7 @@ function HeroSection() {
   }, []);
 
   return (
-    <section className="min-h-screen flex flex-col justify-between pt-20 pb-8 md:pt-24 md:pb-12 relative overflow-hidden">
+    <section className="min-h-screen flex flex-col justify-center relative overflow-hidden">
        {/* Full Screen Video Background */}
        <div className="absolute inset-0 w-full h-full z-0">
            <video 
@@ -83,66 +83,6 @@ function HeroSection() {
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPC9zdmc+')] opacity-20 pointer-events-none"></div>
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/90 pointer-events-none"></div>
         </div>
-
-      {/* Big Title */}
-      <div className="w-full flex justify-start relative z-10 px-3 md:px-6">
-        <h1 className="text-[22vw] md:text-[14vw] leading-[0.82] font-black tracking-[-0.03em] uppercase text-left mix-blend-difference text-white">
-          DHURUV
-        </h1>
-      </div>
-
-      {/* Stats Section - Inspired by Screenshot */}
-      <div className="relative z-10 px-3 md:px-6 flex-1 flex items-center">
-        <div className="w-full space-y-12 md:space-y-16 py-8">
-          {/* Stat 1 */}
-          <div className="space-y-2">
-            <div className="text-[15vw] md:text-[12vw] lg:text-[10vw] font-bold leading-none tracking-tight text-white" data-testid="stat-years">
-              3+
-            </div>
-            <div className="text-[9px] md:text-[10px] font-mono uppercase tracking-[0.2em] text-white/60">
-              ( Years Coding )
-            </div>
-            <div className="text-xs md:text-sm text-white/80 uppercase tracking-wider max-w-md">
-              Building and securing systems
-            </div>
-          </div>
-
-          {/* Stat 2 */}
-          <div className="space-y-2">
-            <div className="text-[15vw] md:text-[12vw] lg:text-[10vw] font-bold leading-none tracking-tight text-white" data-testid="stat-projects">
-              10+
-            </div>
-            <div className="text-[9px] md:text-[10px] font-mono uppercase tracking-[0.2em] text-white/60">
-              ( Projects Completed )
-            </div>
-            <div className="text-xs md:text-sm text-white/80 uppercase tracking-wider max-w-md">
-              From security tools to web applications
-            </div>
-          </div>
-
-          {/* Stat 3 */}
-          <div className="space-y-2">
-            <div className="text-[15vw] md:text-[12vw] lg:text-[10vw] font-bold leading-none tracking-tight text-white" data-testid="stat-focus">
-              100%
-            </div>
-            <div className="text-[9px] md:text-[10px] font-mono uppercase tracking-[0.2em] text-white/60">
-              ( Passion & Focus )
-            </div>
-            <div className="text-xs md:text-sm text-white/80 uppercase tracking-wider max-w-md">
-              Dedicated to cybersecurity excellence
-            </div>
-          </div>
-
-          {/* Availability */}
-          <div className="flex items-center gap-3 pt-4 border-t border-white/10">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-            </span>
-            <span className="text-xs md:text-sm font-mono text-white/70 uppercase tracking-wider">Available for Projects</span>
-          </div>
-        </div>
-      </div>
 
       {/* Bottom Text */}
       <div className="space-y-2 relative z-10 px-3 md:px-6">
