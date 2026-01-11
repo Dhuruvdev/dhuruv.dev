@@ -2,6 +2,8 @@ import React, { useEffect, useState, useRef, useCallback } from "react";
 import { motion, useScroll, useSpring, useMotionValueEvent } from "framer-motion";
 import Lenis from "lenis";
 import { cn } from "@/lib/utils";
+import backgroundMusic from "@assets/The_Weeknd_-_Popular_(mp3.pm)_1768138981947.mp3";
+import { Volume2, VolumeX } from "lucide-react";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -17,6 +19,78 @@ export function Layout({ children }: LayoutProps) {
   const lenisRef = useRef<Lenis | null>(null);
   const rafRef = useRef<number | null>(null);
   const [isReady, setIsReady] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const [isMuted, setIsMuted] = useState(true);
+
+  useEffect(() => {
+    const audio = new Audio(backgroundMusic);
+    audio.loop = true;
+    audioRef.current = audio;
+
+    const initAudio = () => {
+      if (!audioContextRef.current) {
+        const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+        const ctx = new AudioContextClass();
+        audioContextRef.current = ctx;
+
+        const source = ctx.createMediaElementSource(audio);
+        
+        // Bass boost filter
+        const bassFilter = ctx.createBiquadFilter();
+        bassFilter.type = "lowshelf";
+        bassFilter.frequency.value = 200;
+        bassFilter.gain.value = 15; // High bass boost
+
+        source.connect(bassFilter);
+        bassFilter.connect(ctx.destination);
+      }
+    };
+
+    const handleInteraction = () => {
+      initAudio();
+      if (isMuted) {
+        audio.play().catch(console.error);
+        setIsMuted(false);
+      } else {
+        audio.pause();
+        setIsMuted(true);
+      }
+    };
+
+    return () => {
+      audio.pause();
+      if (audioContextRef.current) {
+        audioContextRef.current.close();
+      }
+    };
+  }, []);
+
+  const toggleMute = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (!audioContextRef.current) {
+      const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+      const ctx = new AudioContextClass();
+      audioContextRef.current = ctx;
+      const source = ctx.createMediaElementSource(audio);
+      const bassFilter = ctx.createBiquadFilter();
+      bassFilter.type = "lowshelf";
+      bassFilter.frequency.value = 200;
+      bassFilter.gain.value = 15;
+      source.connect(bassFilter);
+      bassFilter.connect(ctx.destination);
+    }
+
+    if (isMuted) {
+      audio.play().catch(console.error);
+      setIsMuted(false);
+    } else {
+      audio.pause();
+      setIsMuted(true);
+    }
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -107,19 +181,31 @@ export function Layout({ children }: LayoutProps) {
           dhuruv.dev
         </div>
 
-        {/* Nav Links */}
-        <nav className="flex flex-col items-end gap-2 text-right pointer-events-auto">
-          {NAV_LINKS.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              onClick={(e) => handleNavClick(e, link.href)}
-              className="text-xs md:text-sm font-mono uppercase tracking-widest text-white/80 hover:text-white transition-colors mix-blend-difference cursor-pointer"
-            >
-              {link.name}
-            </a>
-          ))}
-        </nav>
+        <div className="flex items-center gap-6">
+          <button 
+            onClick={toggleMute}
+            className="text-white/80 hover:text-white transition-colors mix-blend-difference pointer-events-auto flex items-center gap-2"
+          >
+            {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
+            <span className="text-[10px] font-mono uppercase tracking-widest hidden md:block">
+              {isMuted ? "Audio Off" : "Audio On"}
+            </span>
+          </button>
+
+          {/* Nav Links */}
+          <nav className="flex flex-col items-end gap-2 text-right pointer-events-auto">
+            {NAV_LINKS.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                onClick={(e) => handleNavClick(e, link.href)}
+                className="text-xs md:text-sm font-mono uppercase tracking-widest text-white/80 hover:text-white transition-colors mix-blend-difference cursor-pointer"
+              >
+                {link.name}
+              </a>
+            ))}
+          </nav>
+        </div>
       </header>
 
       {/* Main Content */}
