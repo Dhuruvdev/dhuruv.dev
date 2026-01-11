@@ -37,6 +37,17 @@ export default function Home() {
 
 function HeroSection() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"]
+  });
+
+  const rotateX = useTransform(scrollYProgress, [0, 1], [0, 15]);
+  const perspective = useTransform(scrollYProgress, [0, 1], [1000, 1200]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.85]);
+  const y = useTransform(scrollYProgress, [0, 1], [0, 100]);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   React.useEffect(() => {
     const video = videoRef.current;
@@ -65,9 +76,19 @@ function HeroSection() {
   }, []);
 
   return (
-    <section className="min-h-screen flex flex-col justify-center relative overflow-hidden">
+    <section ref={sectionRef} className="min-h-screen flex flex-col justify-center relative overflow-hidden perspective-1000">
        {/* Full Screen Video Background */}
-       <div className="absolute inset-0 w-full h-full z-0">
+       <motion.div 
+         style={{ 
+           rotateX, 
+           perspective,
+           scale,
+           y,
+           opacity,
+           transformOrigin: "center top"
+         }}
+         className="absolute inset-0 w-full h-full z-0"
+       >
            <video 
             ref={videoRef}
             autoPlay
@@ -80,7 +101,7 @@ function HeroSection() {
             <source src={tornadoVideo} type="video/mp4" />
           </video>
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/90 pointer-events-none"></div>
-        </div>
+        </motion.div>
     </section>
   );
 }
