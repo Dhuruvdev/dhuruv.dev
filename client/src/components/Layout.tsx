@@ -22,12 +22,13 @@ export function Layout({ children }: LayoutProps) {
     const timer = setTimeout(() => {
       try {
         const lenis = new Lenis({
-          duration: 1.2,
+          duration: 1.5,
           easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
           orientation: "vertical",
           gestureOrientation: "vertical",
           smoothWheel: true,
-          touchMultiplier: 2,
+          wheelMultiplier: 1.1,
+          touchMultiplier: 1.5,
           wrapper: window as any,
           content: document.documentElement,
         });

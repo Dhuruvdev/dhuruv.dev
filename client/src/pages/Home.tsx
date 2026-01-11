@@ -43,11 +43,11 @@ function HeroSection() {
     offset: ["start start", "end start"]
   });
 
-  const rotateX = useTransform(scrollYProgress, [0, 1], [0, 15]);
-  const perspective = useTransform(scrollYProgress, [0, 1], [1000, 1200]);
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.85]);
-  const y = useTransform(scrollYProgress, [0, 1], [0, 100]);
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const rotateX = useTransform(scrollYProgress, [0, 1], [0, 25]);
+  const perspective = useTransform(scrollYProgress, [0, 1], [1000, 1500]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.7]);
+  const y = useTransform(scrollYProgress, [0, 1], [0, 150]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   React.useEffect(() => {
     const video = videoRef.current;
