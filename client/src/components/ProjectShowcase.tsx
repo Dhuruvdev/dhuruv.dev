@@ -76,22 +76,11 @@ export function ProjectShowcase() {
 
   return (
     <section className="bg-black py-20 overflow-hidden min-h-screen flex flex-col justify-center">
-      <div className="max-w-7xl mx-auto w-full px-6 mb-12 flex justify-between items-start">
-        <h2 className="text-5xl md:text-7xl font-bold tracking-tighter leading-[0.9] text-white uppercase font-sans italic">
-          I BUILT IT<br />
-          <span className="text-pink-300">NO CAP</span>
+      <div className="max-w-7xl mx-auto w-full px-6 mb-12">
+        <h2 className="text-6xl md:text-9xl font-bold tracking-tighter leading-[0.85] text-white uppercase font-sans italic">
+          BORN TO CODE<br />
+          <span className="text-pink-300">FORCED TO SLAY</span>
         </h2>
-        
-        <div className="flex flex-col items-end">
-          <div className="w-24 h-24 md:w-32 md:h-32 rounded-xl overflow-hidden border border-white/10 bg-zinc-900">
-             <img 
-               src={catLiveCam} 
-               alt="Live Cam" 
-               className="w-full h-full object-cover grayscale"
-             />
-          </div>
-          <span className="mt-2 text-[8px] font-mono tracking-widest text-white/40 uppercase">MY-LIVE-CAM</span>
-        </div>
       </div>
 
       {/* Horizontal Scroll Area */}
