@@ -23,6 +23,8 @@ export function Layout({ children }: LayoutProps) {
   const [isMuted, setIsMuted] = useState(false);
 
   useEffect(() => {
+    if (audioRef.current) return; // Prevent multiple initializations
+
     const audio = new Audio(backgroundMusic);
     audio.loop = true;
     audioRef.current = audio;
@@ -71,9 +73,13 @@ export function Layout({ children }: LayoutProps) {
     tryAutoplay();
 
     return () => {
-      audio.pause();
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
       if (audioContextRef.current) {
         audioContextRef.current.close();
+        audioContextRef.current = null;
       }
     };
   }, []);
