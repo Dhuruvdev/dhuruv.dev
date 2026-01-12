@@ -20,7 +20,7 @@ export function Layout({ children }: LayoutProps) {
   const [isReady, setIsReady] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
-  const [isMuted, setIsMuted] = useState(true);
+  const [isMuted, setIsMuted] = useState(false);
 
   useEffect(() => {
     const audio = new Audio(backgroundMusic);
@@ -40,9 +40,6 @@ export function Layout({ children }: LayoutProps) {
         lowPass.type = "lowpass";
         lowPass.frequency.value = 600; // Lower frequency for more "muffled" through-the-wall sound
 
-        const reverb = ctx.createConvolver();
-        // Simple synthetic reverb IR if actual IR isn't available, 
-        // but for now we'll simulate with a peaking filter to mimic room resonance
         const resonance = ctx.createBiquadFilter();
         resonance.type = "peaking";
         resonance.frequency.value = 200;
@@ -59,16 +56,19 @@ export function Layout({ children }: LayoutProps) {
       }
     };
 
-    const handleInteraction = () => {
+    // Attempt to autoplay on mount
+    const tryAutoplay = async () => {
       initAudio();
-      if (isMuted) {
-        audio.play().catch(console.error);
+      try {
+        await audio.play();
         setIsMuted(false);
-      } else {
-        audio.pause();
+      } catch (error) {
+        console.log("Autoplay blocked, waiting for interaction");
         setIsMuted(true);
       }
     };
+
+    tryAutoplay();
 
     return () => {
       audio.pause();

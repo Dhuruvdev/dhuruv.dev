@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
-import loaderGif from '@assets/From_KlickPin_CF_Quadri_Moderni_Dipinti_e_Maschere_Eleganti____1764843579231.gif';
+import loaderVideo from '@assets/222b6ccc1f0f8ac8cd8f6aa4003e9e4c_1768205629006.mp4';
 
 interface VideoLoaderProps {
   children: React.ReactNode;
 }
 
 const NAV_LINKS = [
-  { name: "ABOUT", href: "#about" },
-  { name: "WORK", href: "#work" },
+  { name: "DESIGN", href: "#design" },
   { name: "CONTACT", href: "#contact" },
 ];
 
@@ -34,7 +33,7 @@ function IntroNavbar() {
 
 function LoaderOverlay({ onComplete }: { onComplete: () => void }) {
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [imageLoaded, setImageLoaded] = useState(false);
+  const [videoLoaded, setVideoLoaded] = useState(false);
 
   useEffect(() => {
     const endTimer = setTimeout(() => {
@@ -59,15 +58,18 @@ function LoaderOverlay({ onComplete }: { onComplete: () => void }) {
     >
       <IntroNavbar />
 
-      <img
-        src={loaderGif}
-        alt="Loading"
+      <video
+        autoPlay
+        muted
+        playsInline
         className="w-full h-full object-cover"
-        onLoad={() => setImageLoaded(true)}
-        data-testid="gif-loader"
-      />
+        onLoadedData={() => setVideoLoaded(true)}
+        data-testid="video-loader"
+      >
+        <source src={loaderVideo} type="video/mp4" />
+      </video>
 
-      {!imageLoaded && (
+      {!videoLoaded && (
         <div className="absolute inset-0 flex items-center justify-center z-[55] bg-black">
           <div className="flex flex-col items-center gap-4">
             <div className="w-8 h-8 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
