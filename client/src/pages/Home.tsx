@@ -17,9 +17,12 @@ export default function Home() {
       <div ref={containerRef} className="relative bg-black">
         <div id="home">
           <HeroSection />
-          <RizzySection />
         </div>
-        <div id="design">
+        <div id="me">
+          <RizzySection />
+          <IntroductionSection />
+        </div>
+        <div id="project">
           <ProjectShowcase />
           <SolutionSection />
           <NewSection />
