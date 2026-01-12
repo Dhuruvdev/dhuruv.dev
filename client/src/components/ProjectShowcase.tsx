@@ -66,10 +66,17 @@ export function ProjectShowcase() {
     const currentIndex = Math.floor(latest * totalProjects);
     
     if (currentIndex !== lastPlayedIndex.current && currentIndex >= 0 && currentIndex < totalProjects) {
+      // Audio Feedback
       if (scrollAudioRef.current) {
         scrollAudioRef.current.currentTime = 0;
         scrollAudioRef.current.play().catch(() => {});
       }
+
+      // Haptic/Vibration Feedback (if supported)
+      if (typeof window !== 'undefined' && window.navigator && window.navigator.vibrate) {
+        window.navigator.vibrate(10); // Short pulse
+      }
+
       lastPlayedIndex.current = currentIndex;
     }
   });
@@ -79,14 +86,15 @@ export function ProjectShowcase() {
       <div className="max-w-7xl mx-auto w-full px-6 mb-12">
         <h2 className="text-6xl md:text-9xl font-bold tracking-tighter leading-[0.85] text-white uppercase font-sans italic">
           BORN TO CODE<br />
-          <span className="text-pink-300">FORCED TO SLAY</span>
+          <span className="text-pink-300 animate-pulse">FORCED TO SLAY</span>
         </h2>
       </div>
 
       {/* Horizontal Scroll Area */}
-      <div 
+      <motion.div 
         ref={targetRef}
-        className="flex overflow-x-auto hide-scrollbar gap-4 px-[10vw] pb-20 snap-x snap-mandatory perspective-1000"
+        className="flex overflow-x-auto hide-scrollbar gap-4 px-[10vw] pb-20 snap-x snap-mandatory perspective-1000 scroll-smooth"
+        whileTap={{ scale: 0.98 }}
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         {projects.map((project, index) => (
@@ -116,7 +124,7 @@ export function ProjectShowcase() {
             </div>
           </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       <style>{`
         .hide-scrollbar::-webkit-scrollbar {
