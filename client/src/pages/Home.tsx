@@ -5,6 +5,8 @@ import { SolutionSection } from "@/components/SolutionSection";
 import { NewSection } from "@/components/NewSection";
 import { SectionFive } from "@/components/SectionFive";
 import { motion, useScroll, useTransform } from "framer-motion";
+import spideyImage from "@assets/IMG_20251224_180917_704_1768208180081.webp";
+import normalImageAsset from "@assets/IMG_20260110_232559_1768208210506.jpg";
 import tornadoVideo from "@assets/ff910602e43e722ff30b731491bbbdf0_t4_1768137492567.mp4";
 
 export default function Home() {
@@ -31,8 +33,8 @@ function HeroSection() {
   const [isGoofy, setIsGoofy] = React.useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   
-  const goofyImage = "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&q=80&w=800"; // Placeholder for distorted face
-  const normalImage = "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=800";
+  const goofyImage = spideyImage; 
+  const normalImage = normalImageAsset;
 
   return (
     <section ref={sectionRef} className="min-h-screen flex flex-col items-center justify-center bg-black relative overflow-hidden px-6">
@@ -42,7 +44,7 @@ function HeroSection() {
             I'M A
           </h2>
           <h2 className="text-5xl md:text-8xl font-black italic tracking-tighter leading-none text-white uppercase">
-            GOOFY GUY
+            RIZZY GUY
           </h2>
         </div>
 
