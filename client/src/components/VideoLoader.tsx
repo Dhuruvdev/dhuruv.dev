@@ -6,7 +6,8 @@ interface VideoLoaderProps {
 }
 
 const NAV_LINKS = [
-  { name: "DESIGN", href: "#design" },
+  { name: "HOME", href: "#home" },
+  { name: "PROJECT", href: "#project" },
   { name: "CONTACT", href: "#contact" },
 ];
 

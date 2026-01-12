@@ -11,7 +11,6 @@ interface LayoutProps {
 
 const NAV_LINKS = [
   { name: "HOME", href: "#home" },
-  { name: "ME", href: "#me" },
   { name: "PROJECT", href: "#project" },
   { name: "CONTACT", href: "#contact" },
 ];
@@ -295,7 +294,6 @@ function Footer({ progressPercent, scaleX, handleNavClick }: { progressPercent: 
           <ul className="space-y-4">
             {[
               { name: 'HOME', href: '#home' },
-              { name: 'ME', href: '#me' },
               { name: 'PROJECT', href: '#project' },
               { name: 'CONTACT', href: '#contact' }
             ].map((item) => (
