@@ -52,8 +52,9 @@ export function ProjectShowcase() {
   const lastPlayedIndex = useRef<number>(-1);
 
   useEffect(() => {
-    const audio = new Audio("https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3");
-    audio.volume = 0.15;
+    // Using a more distinct, louder "click" sound
+    const audio = new Audio("https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3");
+    audio.volume = 0.8; // Significantly increased volume
     scrollAudioRef.current = audio;
   }, []);
 
