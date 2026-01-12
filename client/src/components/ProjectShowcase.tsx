@@ -118,7 +118,7 @@ export function ProjectShowcase() {
         ))}
       </div>
 
-      <style jsx global>{`
+      <style>{`
         .hide-scrollbar::-webkit-scrollbar {
           display: none;
         }
