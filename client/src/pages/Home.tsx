@@ -17,6 +17,7 @@ export default function Home() {
       <div ref={containerRef} className="relative bg-black">
         <div id="home">
           <HeroSection />
+          <RizzySection />
         </div>
         <div id="design">
           <ProjectShowcase />
@@ -30,6 +31,77 @@ export default function Home() {
 }
 
 function HeroSection() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"]
+  });
+
+  const rotateX = useTransform(scrollYProgress, [0, 1], [0, 25]);
+  const perspective = useTransform(scrollYProgress, [0, 1], [1000, 1500]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.7]);
+  const y = useTransform(scrollYProgress, [0, 1], [0, 150]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+
+  React.useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const playVideo = async () => {
+      try {
+        video.muted = true;
+        await video.play();
+      } catch (error) {
+        console.log('Video autoplay failed, retrying...', error);
+        video.muted = true;
+        video.play().catch(() => {});
+      }
+    };
+
+    if (video.readyState >= 3) {
+      playVideo();
+    } else {
+      video.addEventListener('canplay', playVideo, { once: true });
+    }
+
+    return () => {
+      video.removeEventListener('canplay', playVideo);
+    };
+  }, []);
+
+  return (
+    <section ref={sectionRef} className="min-h-screen flex flex-col justify-center relative overflow-hidden perspective-1000">
+       {/* Full Screen Video Background */}
+       <motion.div 
+         style={{ 
+           rotateX, 
+           perspective,
+           scale,
+           y,
+           opacity,
+           transformOrigin: "center top"
+         }}
+         className="absolute inset-0 w-full h-full z-0"
+       >
+           <video 
+            ref={videoRef}
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            className="w-full h-full object-cover"
+          >
+            <source src={tornadoVideo} type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/90 pointer-events-none"></div>
+        </motion.div>
+    </section>
+  );
+}
+
+function RizzySection() {
   const [isGoofy, setIsGoofy] = React.useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   
@@ -37,7 +109,7 @@ function HeroSection() {
   const normalImage = normalImageAsset;
 
   return (
-    <section ref={sectionRef} className="min-h-screen flex flex-col items-center justify-center bg-black relative overflow-hidden px-6">
+    <section ref={sectionRef} className="min-h-screen flex flex-col items-center justify-center bg-black relative overflow-hidden px-6 border-t border-white/5">
       <div className="w-full max-w-5xl flex justify-between items-start mb-12">
         <div className="space-y-0">
           <h2 className="text-4xl md:text-6xl font-black italic tracking-tighter leading-none text-pink-300 uppercase">
