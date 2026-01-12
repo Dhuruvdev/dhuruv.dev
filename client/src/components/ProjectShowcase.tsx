@@ -48,8 +48,19 @@ const projects: Project[] = [
 
 export function ProjectShowcase() {
   const targetRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
   const scrollAudioRef = useRef<HTMLAudioElement | null>(null);
   const lastPlayedIndex = useRef<number>(-1);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  const rotateX = useTransform(scrollYProgress, [0, 0.5, 1], [15, 0, -15]);
+  const perspective = useTransform(scrollYProgress, [0, 0.5, 1], [1000, 1000, 1000]);
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1, 0.8]);
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
   useEffect(() => {
     // Using a more distinct, louder "click" sound
@@ -83,48 +94,50 @@ export function ProjectShowcase() {
   });
 
   return (
-    <section className="bg-black py-20 overflow-hidden min-h-screen flex flex-col justify-center">
-      <div className="max-w-7xl mx-auto w-full px-6 mb-12">
-        <h2 className="text-6xl md:text-9xl font-bold tracking-tighter leading-[0.85] text-white uppercase font-sans italic">
-          BORN TO CODE<br />
-          <span className="text-pink-300 animate-pulse">FORCED TO SLAY</span>
-        </h2>
-      </div>
+    <section ref={sectionRef} className="bg-black py-20 overflow-hidden min-h-screen flex flex-col justify-center perspective-1000">
+      <motion.div style={{ rotateX, perspective, scale, opacity }} className="w-full">
+        <div className="max-w-7xl mx-auto w-full px-6 mb-12">
+          <h2 className="text-6xl md:text-9xl font-bold tracking-tighter leading-[0.85] text-white uppercase font-sans italic">
+            BORN TO CODE<br />
+            <span className="text-pink-300 animate-pulse">FORCED TO SLAY</span>
+          </h2>
+        </div>
 
-      {/* Horizontal Scroll Area */}
-      <motion.div 
-        ref={targetRef}
-        className="flex overflow-x-auto hide-scrollbar gap-4 px-[10vw] pb-20 snap-x snap-mandatory perspective-1000 scroll-smooth"
-        whileTap={{ scale: 0.98 }}
-        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-      >
-        {projects.map((project, index) => (
-          <motion.div 
-            key={project.id}
-            className="flex-shrink-0 w-[75vw] md:w-[30vw] aspect-[3/4] relative rounded-2xl overflow-hidden snap-center group"
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10" />
-            <img 
-              src={project.image}
-              alt={project.title}
-              className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
-            />
-            
-            <div className="absolute inset-0 flex flex-col justify-end p-6 z-20">
-              <div className="flex flex-col">
-                <span className="text-xl md:text-2xl font-black italic text-white/40 uppercase tracking-tighter mb-1">
-                  {project.category}
-                </span>
-                <h3 className="text-3xl md:text-5xl font-black italic text-white uppercase tracking-tighter leading-none group-hover:text-pink-300 transition-colors">
-                  {project.title}
-                </h3>
+        {/* Horizontal Scroll Area */}
+        <motion.div 
+          ref={targetRef}
+          className="flex overflow-x-auto hide-scrollbar gap-4 px-[10vw] pb-20 snap-x snap-mandatory scroll-smooth"
+          whileTap={{ scale: 0.98 }}
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
+          {projects.map((project, index) => (
+            <motion.div 
+              key={project.id}
+              className="flex-shrink-0 w-[75vw] md:w-[30vw] aspect-[3/4] relative rounded-2xl overflow-hidden snap-center group"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10" />
+              <img 
+                src={project.image}
+                alt={project.title}
+                className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+              />
+              
+              <div className="absolute inset-0 flex flex-col justify-end p-6 z-20">
+                <div className="flex flex-col">
+                  <span className="text-xl md:text-2xl font-black italic text-white/40 uppercase tracking-tighter mb-1">
+                    {project.category}
+                  </span>
+                  <h3 className="text-3xl md:text-5xl font-black italic text-white uppercase tracking-tighter leading-none group-hover:text-pink-300 transition-colors">
+                    {project.title}
+                  </h3>
+                </div>
               </div>
-            </div>
-          </motion.div>
-        ))}
+            </motion.div>
+          ))}
+        </motion.div>
       </motion.div>
 
       <style>{`
