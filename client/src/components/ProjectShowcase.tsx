@@ -1,5 +1,6 @@
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
+import catLiveCam from "@assets/stock_images/cat_typing_on_laptop_d2f16a9e.jpg";
 
 interface Project {
   id: number;
@@ -7,102 +8,121 @@ interface Project {
   category: string;
   description: string;
   tools: string[];
+  image: string;
 }
 
 const projects: Project[] = [
   {
     id: 1,
-    title: "Network Scanner",
-    category: "Cybersecurity Tool",
+    title: "CHAIN-LABS",
+    category: "Security",
     description: "Advanced network vulnerability scanner built with Python.",
     tools: ["Python", "Scapy", "Nmap"],
-    image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800"
+    image: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 2,
-    title: "Secure Chat App",
-    category: "Web Application",
+    title: "HARDCORE",
+    category: "Development",
     description: "End-to-end encrypted messaging platform.",
     tools: ["JavaScript", "Node.js", "Socket.io"],
-    image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=800"
+    image: "https://images.unsplash.com/photo-1614850523296-e8c0a97323bc?auto=format&fit=crop&q=80&w=800"
   },
   {
     id: 3,
-    title: "Threat Monitor",
-    category: "Monitoring Dashboard",
+    title: "SECURE-VOID",
+    category: "Monitoring",
     description: "Real-time security monitoring dashboard.",
     tools: ["React", "Python", "FastAPI"],
-    image: "https://images.unsplash.com/photo-1551288049-bbbda5366991?auto=format&fit=crop&q=80&w=800"
+    image: "https://images.unsplash.com/photo-1550745165-9bc0122957c3e?auto=format&fit=crop&q=80&w=800"
   },
+  {
+    id: 4,
+    title: "QUANTUM",
+    category: "Encryption",
+    description: "Next-gen encryption protocol research.",
+    tools: ["Rust", "Wasm"],
+    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800"
+  }
 ];
 
 export function ProjectShowcase() {
   const targetRef = useRef<HTMLDivElement>(null);
+  const scrollAudioRef = useRef<HTMLAudioElement | null>(null);
+  const lastPlayedIndex = useRef<number>(-1);
+
+  useEffect(() => {
+    const audio = new Audio("https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3");
+    audio.volume = 0.15;
+    scrollAudioRef.current = audio;
+  }, []);
+
   const { scrollXProgress } = useScroll({
-    target: targetRef,
+    container: targetRef,
+  });
+
+  useMotionValueEvent(scrollXProgress, "change", (latest) => {
+    const totalProjects = projects.length;
+    const currentIndex = Math.floor(latest * totalProjects);
+    
+    if (currentIndex !== lastPlayedIndex.current && currentIndex >= 0 && currentIndex < totalProjects) {
+      if (scrollAudioRef.current) {
+        scrollAudioRef.current.currentTime = 0;
+        scrollAudioRef.current.play().catch(() => {});
+      }
+      lastPlayedIndex.current = currentIndex;
+    }
   });
 
   return (
-    <section className="bg-black py-20 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 mb-12">
-        <div className="flex justify-between items-start">
-          <h2 className="text-6xl md:text-8xl font-black italic tracking-tighter leading-none text-white uppercase">
-            I BUILT IT<br />
-            <span className="text-pink-300">NO CAP</span>
-          </h2>
-          
-          <div className="flex flex-col items-end">
-            <div className="w-32 h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden border-2 border-white/20 hover-elevate group bg-zinc-900">
-               <img 
-                 src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=80&w=400" 
-                 alt="Profile" 
-                 className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-               />
-            </div>
-            <span className="mt-2 text-[10px] font-mono tracking-widest text-white/50 uppercase">MY-LIVE-CAM</span>
+    <section className="bg-black py-20 overflow-hidden min-h-screen flex flex-col justify-center">
+      <div className="max-w-7xl mx-auto w-full px-6 mb-12 flex justify-between items-start">
+        <h2 className="text-5xl md:text-7xl font-bold tracking-tighter leading-[0.9] text-white uppercase font-sans italic">
+          I BUILT IT<br />
+          <span className="text-pink-300">NO CAP</span>
+        </h2>
+        
+        <div className="flex flex-col items-end">
+          <div className="w-24 h-24 md:w-32 md:h-32 rounded-xl overflow-hidden border border-white/10 bg-zinc-900">
+             <img 
+               src={catLiveCam} 
+               alt="Live Cam" 
+               className="w-full h-full object-cover grayscale"
+             />
           </div>
+          <span className="mt-2 text-[8px] font-mono tracking-widest text-white/40 uppercase">MY-LIVE-CAM</span>
         </div>
       </div>
 
       {/* Horizontal Scroll Area */}
       <div 
         ref={targetRef}
-        className="flex overflow-x-auto hide-scrollbar gap-6 px-6 pb-12 snap-x snap-mandatory"
+        className="flex overflow-x-auto hide-scrollbar gap-4 px-[10vw] pb-20 snap-x snap-mandatory perspective-1000"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         {projects.map((project, index) => (
           <motion.div 
             key={project.id}
-            className="flex-shrink-0 w-[85vw] md:w-[45vw] aspect-[4/5] relative rounded-3xl overflow-hidden snap-center group hover-elevate"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
+            className="flex-shrink-0 w-[75vw] md:w-[30vw] aspect-[3/4] relative rounded-2xl overflow-hidden snap-center group"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
           >
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent z-10" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10" />
             <img 
-              src={project.image || `https://images.unsplash.com/photo-${1550745165 + index}-9bc122957c3e?auto=format&fit=crop&q=80&w=800`}
+              src={project.image}
               alt={project.title}
               className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
             />
-            <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-12 z-20">
-              <div className="space-y-4">
-                <div className="flex flex-col">
-                  <span className="text-xl md:text-2xl font-black italic text-white/40 uppercase tracking-tighter mb-1">
-                    {project.category}
-                  </span>
-                  <h3 className="text-4xl md:text-6xl font-black italic text-white uppercase tracking-tighter leading-none group-hover:text-pink-300 transition-colors">
-                    {project.title}
-                  </h3>
-                </div>
-                
-                <div className="pt-4 flex items-center justify-between border-t border-white/10">
-                   <span className="text-2xl md:text-4xl font-black italic text-white/20 tracking-tighter uppercase">
-                     {new Date().toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '.')}
-                   </span>
-                   <div className="text-xs font-mono tracking-[0.3em] text-white/50 uppercase group-hover:text-white transition-colors">
-                     HARDIK BHANSALI
-                   </div>
-                </div>
+            
+            <div className="absolute inset-0 flex flex-col justify-end p-6 z-20">
+              <div className="flex flex-col">
+                <span className="text-xl md:text-2xl font-black italic text-white/40 uppercase tracking-tighter mb-1">
+                  {project.category}
+                </span>
+                <h3 className="text-3xl md:text-5xl font-black italic text-white uppercase tracking-tighter leading-none group-hover:text-pink-300 transition-colors">
+                  {project.title}
+                </h3>
               </div>
             </div>
           </motion.div>
