@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, useCallback } from "react";
 import { motion, useScroll, useSpring, useMotionValueEvent } from "framer-motion";
 import Lenis from "lenis";
 import { cn } from "@/lib/utils";
-import backgroundMusic from "@assets/whisper_ambient.mp3";
+import backgroundMusic from "@assets/The_Weeknd_-_Popular_(mp3.pm)_1768138981947.mp3";
 import { Volume2, VolumeX } from "lucide-react";
 
 interface LayoutProps {
@@ -35,16 +35,23 @@ export function Layout({ children }: LayoutProps) {
 
         const source = ctx.createMediaElementSource(audio);
         
-        // Make it sounds like a whisper - high pass and low volume
-        const highPass = ctx.createBiquadFilter();
-        highPass.type = "highpass";
-        highPass.frequency.value = 1000;
+        // Low-pass filter for a muffled "vibing" sound
+        const lowPass = ctx.createBiquadFilter();
+        lowPass.type = "lowpass";
+        lowPass.frequency.value = 800; // Muffle the high end for that low-beat vibe
+
+        // Bass boost to keep the "vibe"
+        const bassBoost = ctx.createBiquadFilter();
+        bassBoost.type = "lowshelf";
+        bassBoost.frequency.value = 150;
+        bassBoost.gain.value = 12;
 
         const gainNode = ctx.createGain();
-        gainNode.gain.value = 0.15; // Very low volume
+        gainNode.gain.value = 0.35; // Audible but not overpowering
 
-        source.connect(highPass);
-        highPass.connect(gainNode);
+        source.connect(lowPass);
+        lowPass.connect(bassBoost);
+        bassBoost.connect(gainNode);
         gainNode.connect(ctx.destination);
       }
     };
