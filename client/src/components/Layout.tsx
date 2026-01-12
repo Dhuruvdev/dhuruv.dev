@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, useCallback } from "react";
 import { motion, useScroll, useSpring, useMotionValueEvent } from "framer-motion";
 import Lenis from "lenis";
 import { cn } from "@/lib/utils";
-import backgroundMusic from "@assets/The_Weeknd_-_Popular_(mp3.pm)_1768138981947.mp3";
+import backgroundMusic from "@assets/SpotiDownloader.com_-_Bandit_-_Beast_Inside_Beats_1768206793240.mp3";
 import { Volume2, VolumeX } from "lucide-react";
 
 interface LayoutProps {
