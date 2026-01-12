@@ -64,21 +64,18 @@ export function ProjectShowcase() {
 
   useMotionValueEvent(scrollXProgress, "change", (latest) => {
     const totalProjects = projects.length;
-    // Increased sensitivity by using a higher multiplier for the index
-    const currentIndex = Math.floor(latest * totalProjects * 5); 
+    const currentIndex = Math.floor(latest * totalProjects);
     
-    if (currentIndex !== lastPlayedIndex.current) {
+    if (currentIndex !== lastPlayedIndex.current && currentIndex >= 0 && currentIndex < totalProjects) {
       // Audio Feedback
       if (scrollAudioRef.current) {
-        // Create a new audio instance for overlapping sounds when scrolling fast
-        const sound = scrollAudioRef.current.cloneNode() as HTMLAudioElement;
-        sound.volume = 0.4; // Slightly lower volume per tick since they overlap
-        sound.play().catch(() => {});
+        scrollAudioRef.current.currentTime = 0;
+        scrollAudioRef.current.play().catch(() => {});
       }
 
       // Haptic/Vibration Feedback (if supported)
       if (typeof window !== 'undefined' && window.navigator && window.navigator.vibrate) {
-        window.navigator.vibrate(5); // Even shorter pulse for high frequency
+        window.navigator.vibrate(10); // Short pulse
       }
 
       lastPlayedIndex.current = currentIndex;
