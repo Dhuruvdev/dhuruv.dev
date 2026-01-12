@@ -35,23 +35,26 @@ export function Layout({ children }: LayoutProps) {
 
         const source = ctx.createMediaElementSource(audio);
         
-        // Low-pass filter for a muffled "vibing" sound
+        // Create "Mall Toilet" acoustics: Muffled, Reverb, and Low-pass
         const lowPass = ctx.createBiquadFilter();
         lowPass.type = "lowpass";
-        lowPass.frequency.value = 800; // Muffle the high end for that low-beat vibe
+        lowPass.frequency.value = 600; // Lower frequency for more "muffled" through-the-wall sound
 
-        // Bass boost to keep the "vibe"
-        const bassBoost = ctx.createBiquadFilter();
-        bassBoost.type = "lowshelf";
-        bassBoost.frequency.value = 150;
-        bassBoost.gain.value = 12;
+        const reverb = ctx.createConvolver();
+        // Simple synthetic reverb IR if actual IR isn't available, 
+        // but for now we'll simulate with a peaking filter to mimic room resonance
+        const resonance = ctx.createBiquadFilter();
+        resonance.type = "peaking";
+        resonance.frequency.value = 200;
+        resonance.Q.value = 5;
+        resonance.gain.value = 10;
 
         const gainNode = ctx.createGain();
-        gainNode.gain.value = 0.35; // Audible but not overpowering
+        gainNode.gain.value = 0.2; // Quieter, like it's coming from the ceiling/outside
 
         source.connect(lowPass);
-        lowPass.connect(bassBoost);
-        bassBoost.connect(gainNode);
+        lowPass.connect(resonance);
+        resonance.connect(gainNode);
         gainNode.connect(ctx.destination);
       }
     };
