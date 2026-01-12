@@ -104,62 +104,65 @@ function HeroSection() {
 function RizzySection() {
   const [isGoofy, setIsGoofy] = React.useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
-  
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  const rotateX = useTransform(scrollYProgress, [0, 0.5, 1], [15, 0, -15]);
+  const perspective = useTransform(scrollYProgress, [0, 0.5, 1], [1000, 1000, 1000]);
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1, 0.8]);
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
+
   const goofyImage = spideyImage; 
   const normalImage = normalImageAsset;
 
   return (
-    <section ref={sectionRef} className="min-h-screen flex flex-col items-center justify-center bg-black relative overflow-hidden px-6 border-t border-white/5">
-      <div className="w-full max-w-5xl flex justify-between items-start mb-12">
-        <div className="space-y-0">
-          <h2 className="text-4xl md:text-6xl font-black italic tracking-tighter leading-none text-pink-300 uppercase">
-            I'M A
-          </h2>
-          <h2 className="text-5xl md:text-8xl font-black italic tracking-tighter leading-none text-white uppercase">
-            RIZZY GUY
-          </h2>
-        </div>
-
-        <div className="flex flex-col items-end">
-          <div className="w-24 h-24 md:w-32 md:h-32 rounded-xl overflow-hidden border border-white/10 bg-zinc-900">
-             <img 
-               src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJueXByZzRxZ3R4Z3R4Z3R4Z3R4Z3R4Z3R4Z3R4Z3R4Z3R4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/mlvseq9nOeZh6/giphy.gif" 
-               alt="Live Cam" 
-               className="w-full h-full object-cover grayscale"
-             />
+    <section ref={sectionRef} className="min-h-screen flex flex-col items-center justify-center bg-black relative overflow-hidden px-6 border-t border-white/5 perspective-1000">
+      <motion.div 
+        style={{ rotateX, perspective, scale, opacity }}
+        className="w-full max-w-5xl flex flex-col items-center"
+      >
+        <div className="w-full flex justify-between items-start mb-12">
+          <div className="space-y-0">
+            <h2 className="text-4xl md:text-6xl font-black italic tracking-tighter leading-none text-pink-300 uppercase">
+              I'M A
+            </h2>
+            <h2 className="text-5xl md:text-8xl font-black italic tracking-tighter leading-none text-white uppercase">
+              RIZZY GUY
+            </h2>
           </div>
-          <span className="mt-2 text-[8px] font-mono tracking-widest text-white/40 uppercase">MY-LIVE-CAM</span>
         </div>
-      </div>
 
-      <div className="relative group cursor-pointer" onClick={() => setIsGoofy(!isGoofy)}>
-        <motion.div
-          animate={{
-            borderRadius: isGoofy ? ["20% 80% 30% 70% / 60% 30% 70% 40%", "70% 30% 50% 50% / 30% 60% 40% 70%"] : "24px"
-          }}
-          transition={{
-            duration: 2,
-            repeat: isGoofy ? Infinity : 0,
-            repeatType: "reverse",
-            ease: "easeInOut"
-          }}
-          className="w-[80vw] md:w-[35vw] aspect-[3/4] overflow-hidden relative border border-white/10"
-        >
-          <motion.img
-            key={isGoofy ? "goofy" : "normal"}
-            initial={{ filter: "blur(20px) contrast(200%)", opacity: 0 }}
-            animate={{ filter: "blur(0px) contrast(100%)", opacity: 1 }}
-            src={isGoofy ? goofyImage : normalImage}
-            className="w-full h-full object-cover grayscale brightness-75 group-hover:brightness-100 transition-all duration-700"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent pointer-events-none" />
-        </motion.div>
-        
-        <div className="flex justify-between mt-4 w-full text-white/30 font-mono text-[10px] uppercase tracking-widest italic">
-          <span>CLICK ME</span>
-          <span>-10000 RIZZ</span>
+        <div className="relative group cursor-pointer" onClick={() => setIsGoofy(!isGoofy)}>
+          <motion.div
+            animate={{
+              borderRadius: isGoofy ? ["20% 80% 30% 70% / 60% 30% 70% 40%", "70% 30% 50% 50% / 30% 60% 40% 70%"] : "24px"
+            }}
+            transition={{
+              duration: 2,
+              repeat: isGoofy ? Infinity : 0,
+              repeatType: "reverse",
+              ease: "easeInOut"
+            }}
+            className="w-[80vw] md:w-[35vw] aspect-[3/4] overflow-hidden relative border border-white/10"
+          >
+            <motion.img
+              key={isGoofy ? "goofy" : "normal"}
+              initial={{ filter: "blur(20px) contrast(200%)", opacity: 0 }}
+              animate={{ filter: "blur(0px) contrast(100%)", opacity: 1 }}
+              src={isGoofy ? goofyImage : normalImage}
+              className="w-full h-full object-cover grayscale brightness-75 group-hover:brightness-100 transition-all duration-700"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent pointer-events-none" />
+          </motion.div>
+          
+          <div className="flex justify-between mt-4 w-full text-white/30 font-mono text-[10px] uppercase tracking-widest italic">
+            <span>CLICK ME</span>
+            <span>-10000 RIZZ</span>
+          </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }
