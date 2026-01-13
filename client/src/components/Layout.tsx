@@ -68,6 +68,16 @@ export function Layout({ children }: LayoutProps) {
       } catch (error) {
         console.log("Autoplay blocked, waiting for interaction");
         setIsMuted(true);
+        // Add a one-time click listener to the document to start audio
+        const startOnInteraction = () => {
+          audio.play().then(() => {
+            setIsMuted(false);
+            document.removeEventListener('click', startOnInteraction);
+            document.removeEventListener('touchstart', startOnInteraction);
+          }).catch(console.error);
+        };
+        document.addEventListener('click', startOnInteraction);
+        document.addEventListener('touchstart', startOnInteraction);
       }
     };
 
@@ -93,18 +103,33 @@ export function Layout({ children }: LayoutProps) {
       const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
       const ctx = new AudioContextClass();
       audioContextRef.current = ctx;
+
       const source = ctx.createMediaElementSource(audio);
-      const bassFilter = ctx.createBiquadFilter();
-      bassFilter.type = "lowshelf";
-      bassFilter.frequency.value = 150;
-      bassFilter.gain.value = 6;
-      source.connect(bassFilter);
-      bassFilter.connect(ctx.destination);
+      
+      // Re-create the mall toilet effects if they weren't initialized
+      const lowPass = ctx.createBiquadFilter();
+      lowPass.type = "lowpass";
+      lowPass.frequency.value = 600;
+
+      const resonance = ctx.createBiquadFilter();
+      resonance.type = "peaking";
+      resonance.frequency.value = 200;
+      resonance.Q.value = 5;
+      resonance.gain.value = 10;
+
+      const gainNode = ctx.createGain();
+      gainNode.gain.value = 0.2;
+
+      source.connect(lowPass);
+      lowPass.connect(resonance);
+      resonance.connect(gainNode);
+      gainNode.connect(ctx.destination);
     }
 
     if (isMuted) {
-      audio.play().catch(console.error);
-      setIsMuted(false);
+      audio.play().then(() => {
+        setIsMuted(false);
+      }).catch(console.error);
     } else {
       audio.pause();
       setIsMuted(true);
